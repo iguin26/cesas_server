@@ -36,7 +36,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
 app.get("/file/:id", (req, res) => {
   const fileId = req.params.id;
   File.findByPk(fileId)
-    .then(file => {
+    .then((file) => {
       if (!file) {
         return res.status(404).send("File not found");
       }

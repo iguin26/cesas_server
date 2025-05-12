@@ -1,11 +1,12 @@
 import Connect from "connect-pg-simple";
 import session from "express-session";
+import "dotenv/config";
 
 const ConnectSession = Connect(session);
 
 export const sessionStore = new ConnectSession({
   conObject: {
-    connectionString: "postgres://postgres:8659@localhost:5432/cesas",
+    connectionString: process.env.DB,
     ssl: process.env.NODE_ENV === "production",
   },
   tableName: "session",
