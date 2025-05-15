@@ -1,10 +1,31 @@
 import { sequelize } from "../config/db.js";
-import { DataTypes } from "sequelize";
+import { DataTypes, STRING } from "sequelize";
+import { Subject } from "./Subject.js";
 
 export const Course = sequelize.define("Course", {
   name: {
-    type: DataTypes.CHAR(),
+    type: DataTypes.STRING,
     allowNull: false,
+  },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  start_date: {
+    type: DataTypes.DATEONLY,
+  },
+  end_date: {
+    type: DataTypes.DATEONLY,
+  },
+  subject: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Subject,
+      key: "id",
+    },
+  },
+  image: {
+    type: DataTypes.STRING,
   },
 });
 
@@ -13,3 +34,5 @@ export const syncCourse = () => {
     console.log("Tabela 'Course' atualizada com sucesso!");
   });
 };
+
+// syncCourse();

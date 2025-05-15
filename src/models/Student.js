@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
+import { Status } from "./Status.js";
 
 export const Student = sequelize.define("Student", {
   name: {
@@ -14,6 +15,17 @@ export const Student = sequelize.define("Student", {
   cpf: {
     type: DataTypes.STRING,
   },
+  is_active: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
+  status: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Status,
+      key: "id",
+    },
+  },
 });
 
 export const syncStudent = () => {
@@ -23,3 +35,4 @@ export const syncStudent = () => {
 };
 
 // syncStudent();
+sequelize.sync();

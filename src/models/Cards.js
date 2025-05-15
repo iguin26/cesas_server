@@ -2,9 +2,18 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
 
 export const Card = sequelize.define("Card", {
-  name: DataTypes.STRING,
-  image: DataTypes.STRING,
-  text: DataTypes.STRING,
+  name: {
+    type: DataTypes.STRING,
+  },
+  image: {
+    type: DataTypes.STRING,
+  },
+  text: {
+    type: DataTypes.STRING,
+  },
+  show: {
+    type: DataTypes.BOOLEAN,
+  },
 });
 
 export const syncCards = () => {
