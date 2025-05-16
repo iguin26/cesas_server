@@ -3,6 +3,7 @@ import AdminJS from "adminjs";
 import * as AdminJSSequelize from "@adminjs/sequelize";
 import { CourseResource } from "./resources/CourseResource.js";
 import { SubjectResource } from "../admin/resources/SubjectResource.js";
+import { componentLoader } from "./components/components.js";
 // import { UserResource } from "../admin/resources/UserResource.js";
 
 AdminJS.registerAdapter({
@@ -12,6 +13,7 @@ AdminJS.registerAdapter({
 
 export const admin = new AdminJS({
   resources: [CourseResource, SubjectResource],
+  componentLoader: componentLoader,
   branding: {
     companyName: "Cesas",
   },

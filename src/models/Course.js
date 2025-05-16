@@ -1,13 +1,9 @@
 import { sequelize } from "../config/db.js";
-import { DataTypes, STRING } from "sequelize";
+import { DataTypes } from "sequelize";
 import { Subject } from "./Subject.js";
 
 export const Course = sequelize.define("Course", {
   name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  image: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -25,6 +21,10 @@ export const Course = sequelize.define("Course", {
     },
   },
   image: {
+    type: DataTypes.STRING,
+  },
+
+  profilePhotoLocation: {
     type: DataTypes.STRING,
   },
 });
