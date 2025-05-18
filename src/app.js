@@ -17,7 +17,7 @@ const __dirname = path.dirname(__filename);
 
 export const app = express();
 
-app.use("/file", express.static(path.join(__dirname, "..", "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
 app.use(bodyParser.json());
 
