@@ -1,3 +1,6 @@
-export const showHome = (req, res) => {
-  res.status(200).send({ msg: "home page from controllers" });
+export const homeController = {
+  index: (req, res) => {
+    res.render('home');
+  }
 };
+

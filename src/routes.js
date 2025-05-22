@@ -1,22 +1,20 @@
 import express from "express";
-import { showHome } from "./controllers/homeControllers.js";
+import { homeController } from "./controllers/homeControllers.js";
 import { showLogin, showRegister } from "./controllers/userControllers.js";
-import { showFaq } from "./controllers/faqControllers.js";
-import {
-  showAllCourses,
-  showOneCourse,
-} from "./controllers/coursesControllers.js";
+import FaqController from "./controllers/faqControllers.js";
+import CourseController from "./controllers/coursesControllers.js";
 
 export const router = express.Router();
 
-router.get("/", showHome);
+router.get("/", homeController.index);
 
 router.get("/auth/login", showLogin);
 
 router.get("/auth/register", showRegister);
 
-router.get("/courses", showAllCourses);
+router.get("/courses", CourseController.listCourse);
 
-router.get("/courses:id", showOneCourse);
+router.get("/courses:name", CourseController.listCourseByName);
 
-router.get("/faq", showFaq);
+router.get("/faq", FaqController.listFaq);
+router.get("/faq:pergunta", FaqController.listFaqByLike);
