@@ -7,19 +7,4 @@ export const Subject = sequelize.define("Subject", {
     allowNull: false,
     unique: true,
   },
-  is_active: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true,
-  },
-  secret_key: {
-    type: DataTypes.STRING,
-  },
 });
-
-export const syncSubject = () => {
-  Subject.sync({ alter: true }).then(() => {
-    console.log("Tabela 'Subject' atualizada com sucesso!");
-  });
-};
-
-// syncSubject();

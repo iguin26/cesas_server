@@ -26,13 +26,6 @@ export const Course = sequelize.define("Course", {
 
   profilePhotoLocation: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
 });
-
-export const syncCourse = () => {
-  Course.sync({ alter: true }).then(() => {
-    console.log("Tabela 'Course' atualizada com sucesso!");
-  });
-};
-
-// syncCourse();

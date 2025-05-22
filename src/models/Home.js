@@ -1,16 +1,14 @@
 import { sequelize } from "../config/db";
 import { DataTypes } from "sequelize";
 
-export const Faq = sequelize.define(
-  "Faq",
+export const Home = sequelize.define(
+  "Home",
   {
-    pergunta: {
+    imagem: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
-    resposta: {
+    texto: {
       type: DataTypes.TEXT,
-      allowNull: false,
     },
   },
   {
