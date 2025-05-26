@@ -22,7 +22,7 @@ export const uploadAfterHook = async (response, request, context) => {
   const { record, uploadImage } = context;
   if (record.isValid() && uploadImage) {
     const filePath = path.join(
-      "uploads",
+      "uploads/course",
       record.id().toString(),
       uploadImage.name
     );

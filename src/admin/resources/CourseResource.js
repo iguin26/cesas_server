@@ -3,7 +3,7 @@ import { Components } from "../components/components.js";
 import {
   uploadBeforeHook,
   uploadAfterHook,
-} from "../actions/upload-image.hook.js";
+} from "../actions/course-upload-image.hook.js";
 
 export const CourseResource = {
   resource: Course,
@@ -11,6 +11,9 @@ export const CourseResource = {
     properties: {
       profilePhotoLocation: {
         isVisible: false,
+      },
+      subject: {
+        isRequired: true,
       },
 
       uploadImage: {

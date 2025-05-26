@@ -15,6 +15,7 @@ export const Course = sequelize.define("Course", {
   },
   subject: {
     type: DataTypes.INTEGER,
+    allowNull: true,
     references: {
       model: Subject,
       key: "id",
@@ -26,6 +27,6 @@ export const Course = sequelize.define("Course", {
 
   profilePhotoLocation: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
 });
+// await Course.sync({ alter: true });

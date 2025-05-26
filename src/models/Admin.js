@@ -1,4 +1,4 @@
-import { sequelize } from "../config/db";
+import { sequelize } from "../config/db.js";
 import { DataTypes } from "sequelize";
 // import { Role } from "./Role.js";
 
@@ -23,4 +23,4 @@ export const Admin = sequelize.define("Admin", {
   //   },
   // },
 });
-await sequelize.sync({ force: true });
+// await Admin.sync();

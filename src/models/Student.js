@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
 import { Course } from "./Course.js";
+// import { Status } from "./Status.js";
 
 export const Student = sequelize.define("Student", {
   name: {
@@ -101,10 +102,14 @@ export const Student = sequelize.define("Student", {
     allowNull: false,
   },
   status: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Status,
-      key: "id",
-    },
+    // type: DataTypes.INTEGER,
+    // references: {
+    //   model: Status,
+    //   key: "id",
+    // },
+    type: DataTypes.ENUM("Pendente", "Aprovado", "Negado"),
+    defaultValue: "Pendente",
+    allowNull: false,
   },
 });
+// await Student.sync({ force: true });

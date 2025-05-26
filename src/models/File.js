@@ -5,3 +5,4 @@ export const File = sequelize.define("File", {
   filename: DataTypes.STRING,
   path: DataTypes.STRING,
 });
+// await File.sync();

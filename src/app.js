@@ -48,6 +48,9 @@ app.post("/upload", upload.single("file"), (req, res) => {
 
 app.get("/file/:id", (req, res) => {
   const fileId = req.params.id;
+  if (!/^\d+$/.test(fileId)) {
+    return res.status(400).send("invalid id");
+  }
   File.findByPk(fileId)
     .then((file) => {
       if (!file) {

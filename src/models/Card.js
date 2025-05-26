@@ -5,8 +5,16 @@ export const Card = sequelize.define("Card", {
   name: {
     type: DataTypes.STRING,
   },
-  text: {
+  title: {
     type: DataTypes.STRING,
-    allowNull: false,
+  },
+  text: {
+    type: DataTypes.TEXT,
+  },
+  show: {
+    type: DataTypes.BOOLEAN,
   },
 });
+
+// await Card.drop();
+// await Card.sync({ alter: true });

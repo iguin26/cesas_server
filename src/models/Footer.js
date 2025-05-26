@@ -1,4 +1,4 @@
-import { sequelize } from "../config/db";
+import { sequelize } from "../config/db.js";
 import { DataTypes } from "sequelize";
 
 export const Footer = sequelize.define(
@@ -30,3 +30,4 @@ export const Footer = sequelize.define(
     freezeTableName: true,
   }
 );
+// await Footer.sync();
