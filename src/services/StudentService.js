@@ -69,8 +69,7 @@ class StudentService{
       // Não retornamos o CPF por segurança
     };
   }
-
-    
+ 
 }
 
 export default StudentService;
