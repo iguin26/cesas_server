@@ -1,40 +1,34 @@
-import { Course } from "../models/Course.js"
+import CourseService from "../services/courseService.js";
 
-
-class CourseController{
-//LISTANDO TODOS OS CURSOS
-    static async listCourse(req, res){
-      try{
-
-        const course = await Course.findAll();
-        return res.status(200).json(course);
-
-      }catch(error){
-
-        console.error("erro ao listar Cursos", error);
-        return res.status(500).json({error: "erro interno do Servidor"});
-
-      }
+class CourseController {
+  static async listCourse(req, res) {
+    try{
+      const courses = await CourseService.listAllCourses();
+      return res.status(200).json(courses);
+    }catch(error){
+      console.error(" erro no controller", error);
+      return res.status(500).json({
+        erro: error.message || 'Erro interno ao listar cursos'
+      });
     }
+  }
 
-    static async listCourseByName(req, res){
-  //LISTANDO CURSOS POR NOME
-      try{
-        const {name} = req.params;
-        const course = await Course.findOne({where: {name} });
-        if (!course){
-          return res.status(404).json({error: 'Curso nao encontrado'});
-        }
-        return res.status(200).json(course);
+  static async listCoursesByName(req, res){
+    try{
+      const term = req.query.name || '';
+      const courses = await CourseService.listCourseName(term);
+      return res.status(200).json(courses);
+    }catch(error){
+      console.error('Erro no controller', error);
 
-      }catch(error){
-
-        console.error("Erro ao buscar Curso", error);
-        return res.status(500).json({error: "Erro interno no servidor"});
-
+      if(error.message === 'Nenum curso encontrado com esse nome'){
+        return res.status(404).json({erro: error.message});
       }
-
+      return res.status(500).json({
+        erro: error.message || 'Erro interno ao buscar cursos'
+      });
     }
+  }
 
 }
 

@@ -1,6 +1,6 @@
 import express from "express";
 import { homeController } from "./controllers/homeControllers.js";
-import { showLogin, showRegister } from "./controllers/userControllers.js";
+import StudentController from "./controllers/userControllers.js";
 import FaqController from "./controllers/faqControllers.js";
 import CourseController from "./controllers/coursesControllers.js";
 
@@ -14,7 +14,10 @@ router.get("/auth/register", showRegister);
 
 router.get("/courses", CourseController.listCourse);
 
-router.get("/courses:name", CourseController.listCourseByName);
+router.get("/courses/:name", CourseController.listCoursesByName);
 
 router.get("/faq", FaqController.listFaq);
-router.get("/faq:pergunta", FaqController.listFaqByLike);
+router.get("/faq/:search", FaqController.listFaqByLike);
+
+
+router.post('/students', StudentController.create);
