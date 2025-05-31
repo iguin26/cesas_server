@@ -16,17 +16,16 @@ export const Course = sequelize.define("Course", {
   subject: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    references: {
-      model: Subject,
-      key: "id",
-    },
+    // references: {
+    //   model: Subject,
+    //   key: "id",
+    // },
   },
   image: {
     type: DataTypes.STRING,
   },
-
-  profilePhotoLocation: {
-    type: DataTypes.STRING,
+  show: {
+    type: DataTypes.BOOLEAN,
   },
 });
 // await Course.sync({ alter: true });

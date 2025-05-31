@@ -1,8 +1,9 @@
-import { Subject } from "../../models/Subject.js";
+import { Subject } from "../../models/index.js";
 
 export const SubjectResource = {
   resource: Subject,
-  options: {},
-  listProperties: ["id", "name"],
-  editProperties: ["name"],
+  options: {
+    listProperties: ["id", "name"],
+    editProperties: ["name"],
+  },
 };

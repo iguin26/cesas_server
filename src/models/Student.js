@@ -1,115 +1,102 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
 import { Course } from "./Course.js";
-// import { Status } from "./Status.js";
 
 export const Student = sequelize.define("Student", {
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
-  photo: {
+  applyType: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
-  course: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Course,
-      key: "id",
-    },
+  studentPhoto: {
+    type: DataTypes.STRING,
   },
   shift: {
     type: DataTypes.STRING,
   },
-  were_student: {
+  legacyStudent: {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
   },
-  health_issues: {
+  disabledStudent: {
     type: DataTypes.BOOLEAN,
-    allowNull: false,
+  },
+  recordlessStudent: {
+    type: DataTypes.BOOLEAN,
   },
 
-  social_name: {
+  socialName: {
     type: DataTypes.STRING,
   },
 
-  birthday: {
+  birthDate: {
     type: DataTypes.DATEONLY,
-    allowNull: false,
   },
   cpf: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
   nationality: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
   state: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
-  rg_number: {
+  idNumber: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
-  rg_date: {
+  idExpDate: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
-  rg_photo: {
+  idIssuingBody: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
-  race: {
+  studentId: {
     type: DataTypes.STRING,
-    allowNull: false,
+  },
+  ethnicity: {
+    type: DataTypes.STRING,
   },
   cep: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
-  cep_photo: {
+  studentProofOfResidence: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
   address: {
     type: DataTypes.TEXT,
-    allowNull: false,
   },
-  phone: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  telephone: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  parent_name: {
+  cellphoneNumber: {
     type: DataTypes.STRING,
   },
-  parent_cpf: {
+  landlinePhone: {
     type: DataTypes.STRING,
   },
-  transcript: {
+  emergencyPhone: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
-  medical_report: {
+  responsibleName: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
-  status: {
-    // type: DataTypes.INTEGER,
-    // references: {
-    //   model: Status,
-    //   key: "id",
-    // },
-    type: DataTypes.ENUM("Pendente", "Aprovado", "Negado"),
-    defaultValue: "Pendente",
-    allowNull: false,
+  responsibleId: {
+    type: DataTypes.STRING,
+  },
+  gender: {
+    type: DataTypes.STRING,
+  },
+  studentMedicalReport: {
+    type: DataTypes.STRING,
+  },
+  studentAcademicReport: {
+    type: DataTypes.STRING,
   },
 });
+// status: {
+//   // type: DataTypes.INTEGER,
+//   // references: {
+//   //   model: Status,
+//   //   key: "id",
+//   // },
+//   type: DataTypes.ENUM("Pendente", "Aprovado", "Negado"),
+//   defaultValue: "Pendente",
+// }
 // await Student.sync({ force: true });

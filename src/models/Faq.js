@@ -15,7 +15,6 @@ export const Faq = sequelize.define(
 
     show: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
     },
   },
   {

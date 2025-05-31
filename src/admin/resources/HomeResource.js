@@ -1,16 +1,33 @@
 import { Home } from "../../models/Home.js";
+import { Components } from "../components/components.js";
+import {
+  uploadBeforeHook,
+  uploadAfterHook,
+} from "../actions/course-upload-image.hook.js";
 
 export const HomeResource = {
   resource: Home,
   options: {
-    listProperties: ["text", "image"],
+    listProperties: ["id", "text", "uploadImage"],
 
     properties: {
-      text: {
+      id: {
         position: 1,
       },
-      image: {
+      text: {
         position: 2,
+      },
+      uploadImage: {
+        type: "mixed",
+        position: 3,
+        isVisible: { list: true, edit: true, filter: false, show: false },
+        components: {
+          edit: Components.Edit,
+          list: Components.List,
+        },
+      },
+      image: {
+        isVisible: false,
       },
     },
 
@@ -23,6 +40,13 @@ export const HomeResource = {
       },
       delete: {
         isAccessible: false,
+      },
+      show: {
+        isVisible: false,
+      },
+      edit: {
+        before: [uploadBeforeHook],
+        after: [uploadAfterHook],
       },
     },
   },
