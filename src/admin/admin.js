@@ -3,8 +3,13 @@ import AdminJS from "adminjs";
 import * as AdminJSSequelize from "@adminjs/sequelize";
 import { CourseResource } from "./resources/CourseResource.js";
 import { SubjectResource } from "../admin/resources/SubjectResource.js";
+import { CardResource } from "./resources/CardResource.js";
+import { FaqResource } from "./resources/FaqResource.js";
+import { FooterResource } from "./resources/FooterResource.js";
+import { HomeResource } from "./resources/HomeResource.js";
+import { StudentResource } from "./resources/StudentResource.js";
+import { translations } from "./translate.js";
 import { componentLoader } from "./components/components.js";
-// import { UserResource } from "../admin/resources/UserResource.js";
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -12,14 +17,25 @@ AdminJS.registerAdapter({
 });
 
 export const admin = new AdminJS({
-  resources: [CourseResource, SubjectResource],
+  resources: [
+    CardResource,
+    CourseResource,
+    StudentResource,
+    SubjectResource,
+    HomeResource,
+    FaqResource,
+    FooterResource,
+  ],
   componentLoader: componentLoader,
-  branding: {
-    companyName: "Cesas",
-  },
   locale: {
     language: "pt-BR",
     availableLanguages: ["pt-BR", "en"],
+    translations: translations,
+  },
+  branding: {
+    companyName: "CESAS",
+    logo: "/uploads/logo/logo-cesas.jpg",
+    softwareBrothers: false,
   },
 });
 admin.watch();

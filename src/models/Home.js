@@ -1,13 +1,13 @@
-import { sequelize } from "../config/db";
+import { sequelize } from "../config/db.js";
 import { DataTypes } from "sequelize";
 
 export const Home = sequelize.define(
   "Home",
   {
-    imagem: {
+    image: {
       type: DataTypes.STRING,
     },
-    texto: {
+    text: {
       type: DataTypes.TEXT,
     },
   },
@@ -15,3 +15,4 @@ export const Home = sequelize.define(
     freezeTableName: true,
   }
 );
+// await Home.sync({ alter: true });

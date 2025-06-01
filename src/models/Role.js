@@ -6,4 +6,5 @@ export const Role = sequelize.define("Role", {
     type: DataTypes.STRING,
   },
 });
-await sequelize.sync({ force: true });
+// await sequelize.sync({ force: true });
+// await Role.sync();
