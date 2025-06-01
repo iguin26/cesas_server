@@ -7,9 +7,9 @@ export const StudentResource = {
     listProperties: ["id", "name"],
     actions: {
       edit: {
-        // before: [pdfBeforeHook],
-        // after: [pdfAfterHook],
-        isVisible: false,
+        before: [pdfBeforeHook],
+        after: [pdfAfterHook],
+        // isVisible: false,
       },
     },
   },
