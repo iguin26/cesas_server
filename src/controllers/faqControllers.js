@@ -1,4 +1,5 @@
-const {op} = require('sequelize')
+// const {op} = require('sequelize')
+import {Op} from 'sequelize';
 import {Faq} from "../models/Faq.js"
 
 class FaqController{
@@ -24,7 +25,7 @@ class FaqController{
 
       const questions = await Faq.findAll({
         where: {
-          pergunta: {[op.like]: `%${filter}%`}
+          pergunta: {[Op.like]: `%${filter}%`}
         }
       });
       if (!questions){
