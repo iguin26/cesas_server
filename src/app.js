@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import "dotenv/config";
 import { admin } from "./admin/admin.js";
 import { sessionConfig } from "./config/session.js";
@@ -19,7 +20,14 @@ export const app = express();
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
+app.use(cors({
+  origin: "http://localhost:5173", // ou a URL do seu frontend
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 app.use(bodyParser.json());
+app.use(express.json());
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

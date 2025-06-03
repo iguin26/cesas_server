@@ -86,7 +86,7 @@ export const Student = sequelize.define("Student", {
   studentMedicalReport: {
     type: DataTypes.STRING,
   },
-  studentAcademicReport: {
+  studentAcademicRecord: {
     type: DataTypes.STRING,
   },
 });
@@ -99,4 +99,4 @@ export const Student = sequelize.define("Student", {
 //   type: DataTypes.ENUM("Pendente", "Aprovado", "Negado"),
 //   defaultValue: "Pendente",
 // }
-// await Student.sync({ force: true });
+await Student.sync({ force: true });

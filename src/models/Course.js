@@ -28,4 +28,4 @@ export const Course = sequelize.define("Course", {
     type: DataTypes.BOOLEAN,
   },
 });
-// await Course.sync({ alter: true });
+await Course.sync({ alter: true });
