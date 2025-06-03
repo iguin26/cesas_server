@@ -27,13 +27,15 @@ export const admin = new AdminJS({
     FooterResource,
   ],
   componentLoader: componentLoader,
-  branding: {
-    companyName: "Cesas",
-  },
   locale: {
     language: "pt-BR",
     availableLanguages: ["pt-BR", "en"],
     translations: translations,
+  },
+  branding: {
+    companyName: "CESAS",
+    logo: "/uploads/logo/logo-cesas.jpg",
+    softwareBrothers: false,
   },
 });
 admin.watch();

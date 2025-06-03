@@ -21,7 +21,7 @@ export const translations = {
     properties: {
       subject: "Matéria",
       name: "Nome",
-      uploadImage: "Imagem",
+      uploadImage: "Imagem do upload img",
       updatedAt: "Data de Atualização",
       createdAt: "Data de Criação",
       start_date: "Data de Início",
@@ -41,7 +41,7 @@ export const translations = {
       instagramLink: "Link do Instagram",
       youtubeLink: "Link do Youtube",
       siteLink: "Link do Site",
-      image: "Imagem ",
+      image: "Imagem apenas img",
       status: "Status",
       medical_report: "Laudo Médico",
     },

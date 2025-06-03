@@ -84,7 +84,7 @@ export const Student = sequelize.define("Student", {
     type: DataTypes.STRING,
   },
   studentMedicalReport: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING, // ------------------------------
   },
   studentAcademicRecord: {
     type: DataTypes.STRING,
