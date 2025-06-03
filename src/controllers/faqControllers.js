@@ -1,43 +1,35 @@
-// const {op} = require('sequelize')
-import {Op} from 'sequelize';
-import {Faq} from "../models/Faq.js"
+import FaqService from "../services/faqService.js";
 
 class FaqController{
-  //Listar todas as perguntas e respostas
+
   static async listFaq(req, res){
     try{
-
-      const faq = await Faq.findAll();
-      return res.status(200).json(faq);
-
-    }catch(erro){
-
-      console.error("Erro ao listar as Perguntas", erro);
-      return res.status(500).json({erro: "Erro inter no servidor"})
-
+      const faqs = await FaqService.listAllFaqs();
+      return res.status(200).json(faqs);
+    }catch(error) {
+      console.error('Erro no Controller (listFaq)', error);
+      return res.status(500).json({
+        erro: error.message || 'Erro interno ao listar Faqs'
+      });
     }
   }
 
   static async listFaqByLike(req, res){
-//Listando a perguntas por palavras parecidas
     try{
-      const filter = req.query.pergunta || '';
+      const serchTerm = req.query.pergunta || '';
+      const faqs = await FaqService.findFaqsByQuestion(serchTerm);
 
-      const questions = await Faq.findAll({
-        where: {
-          pergunta: {[Op.like]: `%${filter}%`}
-        }
-      });
-      if (!questions){
-        return res.status(404).json({erro: "Pergunta nao Encontrada"});
+      return res.status(200).json(faqs);
+    }catch(error){
+      console.error('Erro no Controller (listFaqByLike):', error);
+
+      if (error.message === 'Nenhuma FAQ encontrada com esse termo') {
+      return res.status(404).json({ erro: error.message });
       }
-      return res.status(200).json(questions);
 
-    }catch(erro){
-
-      console.error("Erro ao buscar Pergunta", erro);
-      return res.status(500).json({erro: "Erro interno no Servidor"});
-
+      return res.status(500).json({
+        erro: error.message || 'Erro interno ao buscar faqs'
+      });
     }
   }
 }
