@@ -2,6 +2,8 @@ import PDFDocument from "pdfkit";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { sanitizeFilename } from "./sanitize.js";
+import streamBuffers from "stream-buffers";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -38,113 +40,140 @@ const writeImage = (doc, imgPath, field) => {
   }
 };
 
+export const generatePdf = (student) => {
+  // aqui vai ficar a func padrao de gerar pdf. qnd for p gerar so um so passar essa func com o padrao correto
+};
+
 export const pdfStudent = (student) => {
-  const doc = new PDFDocument();
-  const uploadBasePath = path.resolve("uploads");
-  const filepath = path.join(
-    __dirname,
-    `../../uploads/pdf/aluno-${student.id}.pdf`
-  );
+  return new Promise((resolve, reject) => {
+    const doc = new PDFDocument();
+    const stream = new streamBuffers.WritableStreamBuffer();
+    // const chunks = [];
 
-  doc.pipe(fs.createWriteStream(filepath));
+    // doc.on("data", (chunk) => chunks.push(chunk));
+    // doc.on("end", () => {
+    //   const pdfBuffer = Buffer.concat(chunks);
+    //   resolve(pdfBuffer);
+    // });
 
-  doc.fontSize(20).text("Ficha do Aluno", { align: "center" });
-  doc.moveDown();
+    doc.pipe(stream);
 
-  doc.fontSize(12);
-  doc.text(`Nome: ${student.name}`);
-  doc.text(`Tipo: ${student.applyType}`);
-  doc.text(`Turno: ${student.shift}`);
-  if (student.legacyStudent) {
-    doc.text(`Já foi estudante: Sim`);
-  } else {
-    doc.text(`Já foi estudante: Não`);
-  }
-  if (student.disabledStudent) {
-    doc.text(`Tem problemas de saúde?: Sim`);
-  } else {
-    doc.text(`Tem problemas de saúde?: Não`);
-  }
+    // const uploadBasePath = path.resolve("uploads");
 
-  if (student.socialName) {
-    doc.text(`Nome social: ${student.socialName}`);
-  }
+    // const safeName = sanitizeFilename(student.name).substring(0, 30);
 
-  doc.text(`Data de nacimento: ${student.birthDate}`);
-  doc.text(`CPF: ${student.cpf}`);
-  doc.text(`Nacionalidade: ${student.nationality}`);
-  doc.text(`Estado: ${student.state}`);
-  doc.text(`Número do RG: ${student.idNumber}`);
-  doc.text(`Data de expedição do RG: ${student.idExpDate}`);
-  doc.text(`Órgão de expedição do RG: ${student.idIssuingBody}`);
-  doc.text(`Raça/Etnia: ${student.ethnicity}`);
-  doc.text(`CEP: ${student.cep}`);
-  doc.text(`Endereço: ${student.address}`);
-  doc.text(`Celular: ${student.cellphoneNumber}`);
-  doc.text(`Telefone: ${student.landlinePhone}`);
-  doc.text(`Telefone de emergência: ${student.emergencyPhone}`);
-  doc.text(`Nome do responsável: ${student.responsibleName}`);
-  doc.text(`RG do responsável: ${student.responsibleId}`);
-  doc.text(`Gênero: ${student.gender}`);
+    // const filepath = path.join(
+    // __dirname,
+    // `../../uploads/pdf/aluno-${student.id}-${safeName.substring(0, 30)}.pdf`
+    // );
 
-  doc.moveDown();
+    // doc.pipe(fs.createWriteStream(filepath));
 
-  if (student.studentPhoto) {
-    const field = "Foto do estudante: ";
-    writeImage(doc, student.studentPhoto, field);
-  } else {
-    doc.text("Foto do estudante: ");
+    doc.fontSize(20).text("Ficha do Aluno", { align: "center" });
     doc.moveDown();
-    doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
-    doc.fillColor("black");
-    doc.moveDown();
-  }
 
-  if (student.studentId) {
-    const field = "Foto do RG do estudante: ";
+    doc.fontSize(12);
+    doc.text(`Nome: ${student.name}`);
+    doc.text(`Tipo: ${student.applyType}`);
+    doc.text(`Turno: ${student.shift}`);
+    if (student.legacyStudent) {
+      doc.text(`Já foi estudante: Sim`);
+    } else {
+      doc.text(`Já foi estudante: Não`);
+    }
+    if (student.disabledStudent) {
+      doc.text(`Tem problemas de saúde?: Sim`);
+    } else {
+      doc.text(`Tem problemas de saúde?: Não`);
+    }
 
-    writeImage(doc, student.studentId, field);
-  } else {
-    doc.text("Foto do RG do estudante: ");
-    doc.moveDown();
-    doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
-    doc.fillColor("black");
-    doc.moveDown();
-  }
+    if (student.socialName) {
+      doc.text(`Nome social: ${student.socialName}`);
+    }
 
-  if (student.studentProofOfResidence) {
-    const field = "Foto do comprovante de residência: ";
-    writeImage(doc, student.studentProofOfResidence, field);
-  } else {
-    doc.text("Foto do comprovante de residência: ");
-    doc.moveDown();
-    doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
-    doc.fillColor("black");
-    doc.moveDown();
-  }
+    doc.text(`Data de nacimento: ${student.birthDate}`);
+    doc.text(`CPF: ${student.cpf}`);
+    doc.text(`Nacionalidade: ${student.nationality}`);
+    doc.text(`Estado: ${student.state}`);
+    doc.text(`Número do RG: ${student.idNumber}`);
+    doc.text(`Data de expedição do RG: ${student.idExpDate}`);
+    doc.text(`Órgão de expedição do RG: ${student.idIssuingBody}`);
+    doc.text(`Raça/Etnia: ${student.ethnicity}`);
+    doc.text(`CEP: ${student.cep}`);
+    doc.text(`Endereço: ${student.address}`);
+    doc.text(`Celular: ${student.cellphoneNumber}`);
+    doc.text(`Telefone: ${student.landlinePhone}`);
+    doc.text(`Telefone de emergência: ${student.emergencyPhone}`);
+    doc.text(`Nome do responsável: ${student.responsibleName}`);
+    doc.text(`RG do responsável: ${student.responsibleId}`);
+    doc.text(`Gênero: ${student.gender}`);
 
-  if (student.studentMedicalReport) {
-    const field = "Laudo médico: ";
-    writeImage(doc, student.studentMedicalReport, field);
-  } else {
-    doc.text("Laudo médico: ");
     doc.moveDown();
-    doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
-    doc.fillColor("black");
-    doc.moveDown();
-  }
 
-  if (student.studentAcademicReport) {
-    const field = "Histórico escolar: ";
-    writeImage(doc, student.studentAcademicReport, field);
-  } else {
-    doc.text("Histórico escolar: ");
-    doc.moveDown();
-    doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
-    doc.fillColor("black");
-    doc.moveDown();
-  }
-  doc.end();
+    if (student.studentPhoto) {
+      const field = "Foto do estudante: ";
+      writeImage(doc, student.studentPhoto, field);
+    } else {
+      doc.text("Foto do estudante: ");
+      doc.moveDown();
+      doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
+      doc.fillColor("black");
+      doc.moveDown();
+    }
 
-  return filepath;
+    if (student.studentId) {
+      const field = "Foto do RG do estudante: ";
+
+      writeImage(doc, student.studentId, field);
+    } else {
+      doc.text("Foto do RG do estudante: ");
+      doc.moveDown();
+      doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
+      doc.fillColor("black");
+      doc.moveDown();
+    }
+
+    if (student.studentProofOfResidence) {
+      const field = "Foto do comprovante de residência: ";
+      writeImage(doc, student.studentProofOfResidence, field);
+    } else {
+      doc.text("Foto do comprovante de residência: ");
+      doc.moveDown();
+      doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
+      doc.fillColor("black");
+      doc.moveDown();
+    }
+
+    if (student.studentMedicalReport) {
+      const field = "Laudo médico: ";
+      writeImage(doc, student.studentMedicalReport, field);
+    } else {
+      doc.text("Laudo médico: ");
+      doc.moveDown();
+      doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
+      doc.fillColor("black");
+      doc.moveDown();
+    }
+
+    if (student.studentAcademicReport) {
+      const field = "Histórico escolar: ";
+      writeImage(doc, student.studentAcademicReport, field);
+    } else {
+      doc.text("Histórico escolar: ");
+      doc.moveDown();
+      doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
+      doc.fillColor("black");
+      doc.moveDown();
+    }
+    doc.end();
+
+    stream.on("finish", () => {
+      const pdfBuffer = stream.getContents();
+      resolve(pdfBuffer);
+    });
+
+    stream.on("error", (err) => reject(err));
+
+    // return filepath;
+  });
 };

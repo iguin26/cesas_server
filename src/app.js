@@ -85,3 +85,33 @@ const adminRouter = buildAuthenticatedRouter(
 
 app.use(admin.options.rootPath, adminRouter);
 app.use(router);
+
+import { Student } from "./models/Student.js";
+import { pdfStudent } from "./utils/pdfStudent.js";
+import { sanitizeFilename } from "./utils/sanitize.js";
+
+app.get("/admin/pdf/student/:id", async (req, res) => {
+  if (!req.session || !req.session.adminUser) {
+    return res.status(401).send("Não autorizado");
+  }
+  try {
+    const id = req.params.id;
+    const student = await Student.findByPk(id);
+    if (!student) {
+      return res.status(404).send({ msg: "nn encontrado" });
+    }
+
+    const pdfBuffer = await pdfStudent(student.toJSON());
+
+    const safeName = sanitizeFilename(student.name).substring(0, 30);
+
+    const filename = `aluno-${student.id}-${safeName}.pdf`;
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `inline; filename="${filename}"`);
+    res.send(pdfBuffer);
+  } catch (error) {
+    console.log("error");
+    res.status(500).send("Erro ao gerar PDF");
+  }
+});

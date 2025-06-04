@@ -8,9 +8,9 @@ export const router = express.Router();
 
 router.get("/", homeController.index);
 
-router.get("/auth/login", showLogin);
+// router.get("/auth/login", showLogin);
 
-router.get("/auth/register", showRegister);
+// router.get("/auth/register", showRegister);
 
 router.get("/courses", CourseController.listCourse);
 
@@ -19,5 +19,4 @@ router.get("/courses/:name", CourseController.listCoursesByName);
 router.get("/faq", FaqController.listFaq);
 router.get("/faq/:search", FaqController.listFaqByLike);
 
-
-router.post('/students', StudentController.create);
+router.post("/students", StudentController.create);

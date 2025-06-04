@@ -5,6 +5,10 @@ const componentLoader = new ComponentLoader();
 const Components = {
   Edit: componentLoader.add("Edit", "./upload-image.edit.jsx"),
   List: componentLoader.add("List", "./upload-image.list.jsx"),
+  OpenPdfInNewTab: componentLoader.add(
+    "OpenPdfInNewTab",
+    "./OpenPdfInNewTab.jsx"
+  ),
 };
 
 export { componentLoader, Components };
