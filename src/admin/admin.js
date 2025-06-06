@@ -7,9 +7,12 @@ import { CardResource } from "./resources/CardResource.js";
 import { FaqResource } from "./resources/FaqResource.js";
 import { FooterResource } from "./resources/FooterResource.js";
 import { HomeResource } from "./resources/HomeResource.js";
-import { StudentResource } from "./resources/StudentResource.js";
+import { ejaStudentResource } from "./resources/ejaStudentResource.js";
+import { profisStudentResource } from "./resources/profisStudentResource.js";
 import { translations } from "./translate.js";
 import { componentLoader } from "./components/components.js";
+import { ejaSubmitFormTitleResource } from "./resources/ejaSubmitFormTitleResource.js";
+import { profisSubmitFormTitleResource } from "./resources/profisSubmitFormTitleResource.js";
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -20,11 +23,14 @@ export const admin = new AdminJS({
   resources: [
     CardResource,
     CourseResource,
-    StudentResource,
+    ejaStudentResource,
+    profisStudentResource,
     SubjectResource,
     HomeResource,
     FaqResource,
     FooterResource,
+    ejaSubmitFormTitleResource,
+    profisSubmitFormTitleResource
   ],
   componentLoader: componentLoader,
   locale: {

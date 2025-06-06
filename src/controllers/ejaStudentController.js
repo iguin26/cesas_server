@@ -1,38 +1,11 @@
-// import StudentService from "../services/StudentService.js";
 
-// class StudentController {
-//   static async create(req, res) {
-//     try {
-//       const studentData = req.body;
+import { ejaStudent } from "../models/ejaStudent.js"
 
-//       if (!studentData.name || !studentData.email || !studentData.cpf){
-//         return res.status(400).json({error: 'Nome, email e cpf sao obrigatorios'});
-
-//       }
-//       const newStudent = await StudentService.createStudent(studentData);
-
-//       return res.status(201).json({
-//         success: true,
-//         data: newStudent
-//       });
-//     }catch (error){
-//       return res.status(400).json({
-//         success: false,
-//         error: error.message
-//       });
-//     }
-//   }
-// }
-
-// export default StudentController;
-
-import { Student } from "../models/Student.js"
-
-class StudentController {
+class ejaStudentController {
   static async listStudent(req, res) {
     try {
 
-      const student = await Student.findAll();
+      const student = await ejaStudent.findAll();
       return res.status(200).json(student);
 
     } catch (error) {
@@ -75,11 +48,11 @@ class StudentController {
 
       const studentPhoto = req.files?.studentPhoto?.[0]?.path || null;
       const studentProofOfResidence = req.files?.studentProofOfResidence?.[0]?.path || null;
-      const studentId = req.files?.studentProofOfResidence?.[0]?.path || null;
+      const studentId = req.files?.studentId?.[0]?.path || null;
       const studentMedicalReport = req.files?.studentMedicalReport?.[0]?.path || null;
       const studentAcademicRecord = req.files?.studentAcademicRecord?.[0]?.path || null;
 
-      const newStudent = await Student.create({
+      const newStudent = await ejaStudent.create({
         name,
         applyType,
         studentPhoto,
@@ -127,4 +100,4 @@ class StudentController {
 
 }
 
-export default StudentController;
+export default ejaStudentController;

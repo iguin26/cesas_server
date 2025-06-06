@@ -1,7 +1,7 @@
 import { sequelize } from "../config/db.js";
 import { Course } from "./Course.js";
 import { Subject } from "./Subject.js";
-import { Student } from "./Student.js";
+import { ejaStudent } from "./ejaStudent.js";
 
 Course.belongsTo(Subject, {
   foreignKey: "subject",
@@ -21,4 +21,4 @@ Subject.hasMany(Course, {
 //   onDelete: "SET NULL",
 // });
 
-export { sequelize, Course, Subject, Student };
+export { sequelize, Course, Subject, ejaStudent as Student };
