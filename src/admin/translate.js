@@ -45,5 +45,14 @@ export const translations = {
       status: "Status",
       medical_report: "Laudo Médico",
     },
+    actions: {
+      viewIndividualPdf: "Visualizar PDF do aluno",
+    },
+    components: {
+      Login: {
+        welcomeHeader: "Seja Bem-vindo",
+        welcomeMessage: "ao painel admnistrativo CESAS!",
+      },
+    },
   },
 };

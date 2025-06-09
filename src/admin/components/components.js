@@ -7,8 +7,17 @@ const Components = {
   List: componentLoader.add("List", "./upload-image.list.jsx"),
   OpenPdfInNewTab: componentLoader.add(
     "OpenPdfInNewTab",
-    "./OpenPdfInNewTab.jsx"
+    "./openPdfInNewTab.jsx"
   ),
+  DownloadAllPdfs: componentLoader.add(
+    "DownloadAllPdfs",
+    "./downloadAllPdfs.jsx"
+  ),
+  DownloadSelectedPdfs: componentLoader.add(
+    "DownloadSelectedPdfs",
+    "./downloadSelectedPdfs.jsx"
+  ),
+  HomePage: componentLoader.add("HomePage", "./homePage.jsx"),
 };
 
 export { componentLoader, Components };

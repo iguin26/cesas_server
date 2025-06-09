@@ -3,7 +3,7 @@ import "dotenv/config";
 import { admin } from "./admin/admin.js";
 import { sessionConfig } from "./config/session.js";
 import { router } from "./routes.js";
-import { buildAuthenticatedRouter } from "@adminjs/express";
+import { buildAuthenticatedRouter, name } from "@adminjs/express";
 import { authenticate } from "./services/authService.js";
 import multer from "multer";
 import bodyParser from "body-parser";
@@ -17,7 +17,22 @@ const __dirname = path.dirname(__filename);
 
 export const app = express();
 
+// Configuração do AdminJS
+const adminRouter = buildAuthenticatedRouter(
+  admin,
+  {
+    authenticate,
+    cookieName: "adminjs",
+    cookiePassword: "sessionsecret",
+  },
+  null,
+  sessionConfig
+);
+
+app.use(admin.options.rootPath, adminRouter);
+
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
+app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use(bodyParser.json());
 
@@ -71,24 +86,12 @@ app.get("/file/:id", (req, res) => {
     });
 });
 
-// Configuração do AdminJS
-const adminRouter = buildAuthenticatedRouter(
-  admin,
-  {
-    authenticate,
-    cookieName: "adminjs",
-    cookiePassword: "sessionsecret",
-  },
-  null,
-  sessionConfig
-);
-
-app.use(admin.options.rootPath, adminRouter);
 app.use(router);
 
 import { Student } from "./models/Student.js";
-import { pdfStudent } from "./utils/pdfStudent.js";
+import { generateStudentPdf } from "./utils/generateStudentPdf.js";
 import { sanitizeFilename } from "./utils/sanitize.js";
+import streamBuffers from "stream-buffers";
 
 app.get("/admin/pdf/student/:id", async (req, res) => {
   if (!req.session || !req.session.adminUser) {
@@ -101,9 +104,9 @@ app.get("/admin/pdf/student/:id", async (req, res) => {
       return res.status(404).send({ msg: "nn encontrado" });
     }
 
-    const pdfBuffer = await pdfStudent(student.toJSON());
+    const pdfBuffer = await generateStudentPdf(student.toJSON());
 
-    const safeName = sanitizeFilename(student.name).substring(0, 30);
+    const safeName = sanitizeFilename(student.name).substring(0, 50);
 
     const filename = `aluno-${student.id}-${safeName}.pdf`;
 
@@ -113,5 +116,94 @@ app.get("/admin/pdf/student/:id", async (req, res) => {
   } catch (error) {
     console.log("error");
     res.status(500).send("Erro ao gerar PDF");
+  }
+});
+
+import archiver from "archiver";
+app.get("/admin/pdf/all", async (req, res) => {
+  if (!req.session || !req.session.adminUser) {
+    return res.status(401).send("Não autorizado");
+  }
+
+  const students = await Student.findAll({ raw: true });
+
+  try {
+    const pdfs = await Promise.all(
+      students.map(async (student) => {
+        const pdfBuffer = await generateStudentPdf(student);
+        return { id: student.id, name: student.name, pdf: pdfBuffer };
+      })
+    );
+
+    const zipBuffer = new streamBuffers.WritableStreamBuffer();
+
+    const archive = archiver("zip", { zlib: { level: 9 } });
+
+    archive.pipe(zipBuffer);
+
+    pdfs.forEach(({ id, name, pdf }) => {
+      const safeName = sanitizeFilename(name).substring(0, 50);
+      archive.append(pdf, { name: `aluno-${id}-${safeName}_Ficha.pdf` });
+    });
+
+    await archive.finalize();
+
+    const zipData = zipBuffer.getContents();
+
+    res.setHeader("Content-Type", "application/zip");
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=fichas_alunos.zip"
+    );
+    res.send(zipData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erro ao gerar os arquivos");
+  }
+});
+
+app.get("/admin/pdf/selected", async (req, res) => {
+  if (!req.session || !req.session.adminUser) {
+    return res.status(401).send("Não autorizado");
+  }
+  const ids = req.query.ids
+    ? req.query.ids.split(",").map((id) => parseInt(id, 10))
+    : [];
+  if (!ids.length) return res.status(400).send("Nenhum aluno selecionado");
+
+  const students = await Student.findAll({
+    where: { id: ids },
+    raw: true,
+  });
+
+  try {
+    const pdfs = await Promise.all(
+      students.map(async (student) => {
+        const pdfBuffer = await generateStudentPdf(student);
+        return { id: student.id, name: student.name, pdf: pdfBuffer };
+      })
+    );
+
+    const zipBuffer = new streamBuffers.WritableStreamBuffer();
+    const archive = archiver("zip", { zlib: { level: 9 } });
+    archive.pipe(zipBuffer);
+
+    pdfs.forEach(({ id, name, pdf }) => {
+      const safeName = sanitizeFilename(name).substring(0, 50);
+      archive.append(pdf, { name: `aluno-${id}-${safeName}_Ficha.pdf` });
+    });
+
+    await archive.finalize();
+    const zipData = zipBuffer.getContents();
+
+    res.setHeader("Content-Type", "application/zip");
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=fichas_alunos_selecionados.zip"
+    );
+    res.send(zipData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Erro ao gerar os arquivos");
   }
 });

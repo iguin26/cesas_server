@@ -1,12 +1,5 @@
 import PDFDocument from "pdfkit";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { sanitizeFilename } from "./sanitize.js";
 import streamBuffers from "stream-buffers";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const writeImage = (doc, imgPath, field) => {
   const maxWidth = doc.page.width - 50; // 50 de margemzinha em cd lado p nn ficar mto esticadoo
@@ -33,6 +26,7 @@ const writeImage = (doc, imgPath, field) => {
     doc.y += imgHeight + 10;
     doc.moveDown();
   } catch (error) {
+    doc.text(field);
     doc.moveDown();
     doc.fillColor("red").text("Erro ao carregar imagem.", { align: "center" });
     doc.fillColor("black");
@@ -40,34 +34,12 @@ const writeImage = (doc, imgPath, field) => {
   }
 };
 
-export const generatePdf = (student) => {
-  // aqui vai ficar a func padrao de gerar pdf. qnd for p gerar so um so passar essa func com o padrao correto
-};
-
-export const pdfStudent = (student) => {
+export const generateStudentPdf = async (student) => {
   return new Promise((resolve, reject) => {
     const doc = new PDFDocument();
-    const stream = new streamBuffers.WritableStreamBuffer();
-    // const chunks = [];
+    const buffer = new streamBuffers.WritableStreamBuffer();
 
-    // doc.on("data", (chunk) => chunks.push(chunk));
-    // doc.on("end", () => {
-    //   const pdfBuffer = Buffer.concat(chunks);
-    //   resolve(pdfBuffer);
-    // });
-
-    doc.pipe(stream);
-
-    // const uploadBasePath = path.resolve("uploads");
-
-    // const safeName = sanitizeFilename(student.name).substring(0, 30);
-
-    // const filepath = path.join(
-    // __dirname,
-    // `../../uploads/pdf/aluno-${student.id}-${safeName.substring(0, 30)}.pdf`
-    // );
-
-    // doc.pipe(fs.createWriteStream(filepath));
+    doc.pipe(buffer);
 
     doc.fontSize(20).text("Ficha do Aluno", { align: "center" });
     doc.moveDown();
@@ -167,13 +139,7 @@ export const pdfStudent = (student) => {
     }
     doc.end();
 
-    stream.on("finish", () => {
-      const pdfBuffer = stream.getContents();
-      resolve(pdfBuffer);
-    });
-
-    stream.on("error", (err) => reject(err));
-
-    // return filepath;
+    buffer.on("finish", () => resolve(buffer.getContents()));
+    buffer.on("error", reject);
   });
 };

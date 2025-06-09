@@ -9,7 +9,7 @@ import { FooterResource } from "./resources/FooterResource.js";
 import { HomeResource } from "./resources/HomeResource.js";
 import { StudentResource } from "./resources/StudentResource.js";
 import { translations } from "./translate.js";
-import { componentLoader } from "./components/components.js";
+import { componentLoader, Components } from "./components/components.js";
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -34,8 +34,16 @@ export const admin = new AdminJS({
   },
   branding: {
     companyName: "CESAS",
-    logo: "/uploads/logo/logo-cesas.jpg",
+    logo: "/uploads/logo/logo-cesas.png",
     softwareBrothers: false,
+    favicon: "uploads/logo/favicon.ico",
+    withMadeWithLove: false,
+  },
+  dashboard: {
+    component: Components.HomePage,
+  },
+  assets: {
+    styles: ["/custom-admin.css"],
   },
 });
 admin.watch();
