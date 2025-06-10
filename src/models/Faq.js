@@ -21,4 +21,4 @@ export const Faq = sequelize.define(
     freezeTableName: true,
   }
 );
-// await Faq.sync({ alter: true });
+await Faq.sync({ alter: true });

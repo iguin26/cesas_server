@@ -15,4 +15,4 @@ export const Home = sequelize.define(
     freezeTableName: true,
   }
 );
-// await Home.sync({ alter: true });
+await Home.sync({ alter: true });

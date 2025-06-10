@@ -17,4 +17,4 @@ export const Card = sequelize.define("Card", {
 });
 
 // await Card.drop();
-// await Card.sync({ alter: true });
+await Card.sync({ alter: true });

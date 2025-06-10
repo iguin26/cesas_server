@@ -7,7 +7,7 @@ const Edit = (props) => {
 
   const [error, setError] = useState(null);
   const [previewFile, setPreviewFile] = useState(null);
-  const ALLOWED_TYPES = ["image/jpeg", "image/png"];
+  const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/svg+xml"];
   const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
   const handleDropZoneChange = (files) => {

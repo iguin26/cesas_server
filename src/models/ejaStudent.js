@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
-import { Course } from "./Course.js";
+// import { Course } from "./ProfisCourse.js";
 
-export const Student = sequelize.define("Student", {
+export const ejaStudent = sequelize.define("ejaStudent", {
   name: {
     type: DataTypes.STRING,
   },
@@ -86,17 +86,8 @@ export const Student = sequelize.define("Student", {
   studentMedicalReport: {
     type: DataTypes.STRING, // ------------------------------
   },
-  studentAcademicReport: {
-    type: DataTypes.STRING, // ------------------------------
+  studentAcademicRecord: {
+    type: DataTypes.STRING,
   },
 });
-// status: {
-//   // type: DataTypes.INTEGER,
-//   // references: {
-//   //   model: Status,
-//   //   key: "id",
-//   // },
-//   type: DataTypes.ENUM("Pendente", "Aprovado", "Negado"),
-//   defaultValue: "Pendente",
-// }
-// await Student.sync({ force: true });
+await ejaStudent.sync();

@@ -1,8 +1,8 @@
-import { Student } from "../../models/index.js";
+import { ejaStudent } from "../../models/ejaStudent.js";
 import { pdfBeforeHook, pdfAfterHook } from "../actions/pdf.hook.js";
 
-export const StudentResource = {
-  resource: Student,
+export const ejaStudentResource = {
+  resource: ejaStudent,
   options: {
     listProperties: ["id", "name"],
     actions: {

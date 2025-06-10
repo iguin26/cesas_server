@@ -1,15 +1,19 @@
 // src/config/admin.js
 import AdminJS from "adminjs";
 import * as AdminJSSequelize from "@adminjs/sequelize";
-import { CourseResource } from "./resources/CourseResource.js";
+import { ProfisCourseResource } from "./resources/ProfisCourseResource.js";
 import { SubjectResource } from "../admin/resources/SubjectResource.js";
 import { CardResource } from "./resources/CardResource.js";
 import { FaqResource } from "./resources/FaqResource.js";
 import { FooterResource } from "./resources/FooterResource.js";
 import { HomeResource } from "./resources/HomeResource.js";
-import { StudentResource } from "./resources/StudentResource.js";
+import { ejaStudentResource } from "./resources/ejaStudentResource.js";
+import { profisStudentResource } from "./resources/profisStudentResource.js";
 import { translations } from "./translate.js";
 import { componentLoader } from "./components/components.js";
+import { ejaSubmitFormTitleResource } from "./resources/ejaSubmitFormTitleResource.js";
+import { profisSubmitFormTitleResource } from "./resources/profisSubmitFormTitleResource.js";
+import { ejaCourseResource } from "./resources/ejaCourseResource.js";
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -19,12 +23,16 @@ AdminJS.registerAdapter({
 export const admin = new AdminJS({
   resources: [
     CardResource,
-    CourseResource,
-    StudentResource,
+    ProfisCourseResource,
+    ejaCourseResource,
+    ejaStudentResource,
+    profisStudentResource,
     SubjectResource,
     HomeResource,
     FaqResource,
     FooterResource,
+    ejaSubmitFormTitleResource,
+    profisSubmitFormTitleResource
   ],
   componentLoader: componentLoader,
   locale: {
