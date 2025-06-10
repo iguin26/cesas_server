@@ -50,5 +50,14 @@ export const translations = {
       nightShiftAvailable: "Turno Noturno Disponível"
     
     },
+    actions: {
+      viewIndividualPdf: "Visualizar PDF do aluno",
+    },
+    components: {
+      Login: {
+        welcomeHeader: "Seja Bem-vindo",
+        welcomeMessage: "ao painel admnistrativo CESAS!",
+      },
+    },
   },
 };

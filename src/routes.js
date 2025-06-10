@@ -3,6 +3,7 @@ import { homeController } from "./controllers/homeControllers.js";
 import ejaStudentController from "./controllers/ejaStudentController.js";
 import profisStudentController from "./controllers/profisStudentController.js";
 import FaqController from "./controllers/faqControllers.js";
+import PdfController from "./controllers/pdfControllers.js";
 // import CourseController from "./controllers/coursesControllers.js";
 // import StudentController from "./controllers/userControllers.js";
 import { upload } from "./config/multer.js";
@@ -26,18 +27,28 @@ router.get("/", homeController.index);
 router.get("/faq", FaqController.listFaq);
 router.get("/faq/:search", FaqController.listFaqByLike);
 
+router.post("/students", StudentController.create);
 
+router.get("/admin/pdf/student/:id", PdfController.generateStudentPdfById);
+router.get("/admin/pdf/all", PdfController.generateAllStudentsPdfs);
+router.get("/admin/pdf/selected", PdfController.generateSelectedStudentsPdfs);
 // router.post('/students', StudentController.insertStudent);
 
-router.get("/ejaSubmitFormTitle", ejaSubmitFormTitleController.getSubmitFormTitle);
-router.get("/profisSubmitFormTitle", profisSubmitFormTitleController.getSubmitFormTitle);
+router.get(
+  "/ejaSubmitFormTitle",
+  ejaSubmitFormTitleController.getSubmitFormTitle
+);
+router.get(
+  "/profisSubmitFormTitle",
+  profisSubmitFormTitleController.getSubmitFormTitle
+);
 router.get("/getFooterData", footerController.getFooterData);
 // router.get("/getCursos", CourseService.listAllCourses);
 
 router.get("/getProfisCursos", async (req, res) => {
   try {
     const cursos = await CourseService.listAllProfisCourses();
-    res.json(cursos); 
+    res.json(cursos);
   } catch (error) {
     res.status(500).json({ error: "Erro ao listar cursos" });
   }
@@ -46,7 +57,7 @@ router.get("/getProfisCursos", async (req, res) => {
 router.get("/getEJACursos", async (req, res) => {
   try {
     const cursos = await CourseService.listAllEJACourses();
-    res.json(cursos); 
+    res.json(cursos);
   } catch (error) {
     res.status(500).json({ error: "Erro ao listar cursos" });
   }
@@ -66,8 +77,6 @@ router.post(
 
 router.post(
   "/professionalizing/students",
-  upload.fields([
-    { name: "studentMedicalReport", maxCount: 1 }
-  ]),
+  upload.fields([{ name: "studentMedicalReport", maxCount: 1 }]),
   profisStudentController.insertStudent
 );

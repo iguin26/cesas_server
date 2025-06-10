@@ -10,7 +10,7 @@ import { HomeResource } from "./resources/HomeResource.js";
 import { ejaStudentResource } from "./resources/ejaStudentResource.js";
 import { profisStudentResource } from "./resources/profisStudentResource.js";
 import { translations } from "./translate.js";
-import { componentLoader } from "./components/components.js";
+import { componentLoader, Components } from "./components/components.js";
 import { ejaSubmitFormTitleResource } from "./resources/ejaSubmitFormTitleResource.js";
 import { profisSubmitFormTitleResource } from "./resources/profisSubmitFormTitleResource.js";
 import { ejaCourseResource } from "./resources/ejaCourseResource.js";
@@ -32,7 +32,7 @@ export const admin = new AdminJS({
     FaqResource,
     FooterResource,
     ejaSubmitFormTitleResource,
-    profisSubmitFormTitleResource
+    profisSubmitFormTitleResource,
   ],
   componentLoader: componentLoader,
   locale: {
@@ -42,8 +42,16 @@ export const admin = new AdminJS({
   },
   branding: {
     companyName: "CESAS",
-    logo: "/uploads/logo/logo-cesas.jpg",
+    logo: "/uploads/logo/logo-cesas.png",
     softwareBrothers: false,
+    favicon: "uploads/logo/favicon.ico",
+    withMadeWithLove: false,
+  },
+  dashboard: {
+    component: Components.HomePage,
+  },
+  assets: {
+    styles: ["/custom-admin.css"],
   },
 });
 admin.watch();

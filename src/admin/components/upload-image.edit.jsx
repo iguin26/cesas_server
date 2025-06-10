@@ -1,53 +1,48 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Label, Box, DropZone, DropZoneItem } from "@adminjs/design-system";
 
 const Edit = (props) => {
   const { property, onChange, record } = props;
+  const [dropZoneKey, setDropZoneKey] = useState(0);
 
-  const [error, setError] = useState(null);
-  const [previewFile, setPreviewFile] = useState(null);
-  const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/svg+xml"];
-  const MAX_SIZE = 5 * 1024 * 1024; // 5MB
-
-  const handleDropZoneChange = (files) => {
-    const file = files[0];
-
-    if (file) {
-      if (!ALLOWED_TYPES.includes(file.type)) {
-        setError("Arquivo inválido: apenas JPEG e PNG são permitidos.");
-        setPreviewFile(null);
-        onChange(property.name, null);
-        return;
-      }
-
-      if (file.size > MAX_SIZE) {
-        setError("Arquivo muito grande. Máximo permitido: 5MB.");
-        setPreviewFile(null);
-        onChange(property.name, null);
-        return;
-      }
-      setError(null); // limpar erro
-      setPreviewFile(file);
-      onChange(property.name, file);
-    }
-  };
+  const backendError = record.errors?.uploadImage?.message;
 
   const uploadedPhoto = record.params.image;
   const photoToUpload = record.params[property.name];
 
+  const handleRemove = () => {
+    onChange(property.name, null);
+    setDropZoneKey((k) => k + 1);
+  };
+
   return (
     <Box marginBottom="xxl">
       <Label>{"Imagem"}</Label>
-      <DropZone onChange={handleDropZoneChange} />
-      {error && (
-        <Box color="red" mt="sm">
-          {error}
+      {!photoToUpload && (
+        <DropZone
+          key={dropZoneKey}
+          onChange={(files) => onChange(property.name, files[0])}
+        />
+      )}
+
+      {photoToUpload && (
+        <Box mt="lg">
+          <DropZoneItem
+            src={URL.createObjectURL(photoToUpload)}
+            filename={photoToUpload.name}
+            onRemove={handleRemove}
+          />
         </Box>
       )}
-      {!photoToUpload && uploadedPhoto && !error && (
+
+      {!photoToUpload && uploadedPhoto && (
         <Box mt="lg">
-          <DropZoneItem src={uploadedPhoto} />
+          <DropZoneItem src={uploadedPhoto} onRemove={handleRemove} />
+        </Box>
+      )}
+      {backendError && (
+        <Box color="red" mt="sm">
+          {backendError}
         </Box>
       )}
     </Box>
