@@ -23,4 +23,4 @@ export const Admin = sequelize.define("Admin", {
   //   },
   // },
 });
-await Admin.sync();
+// await Admin.sync();

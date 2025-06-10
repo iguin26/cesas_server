@@ -7,4 +7,4 @@ export const Role = sequelize.define("Role", {
   },
 });
 // await sequelize.sync({ force: true });
-await Role.sync();
+// await Role.sync();

@@ -29,4 +29,4 @@ export const ejaCourse = sequelize.define("ejaCourses", {
     type: DataTypes.BOOLEAN,
   },
 });
-await ejaCourse.sync();
+// await ejaCourse.sync();

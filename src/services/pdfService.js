@@ -1,4 +1,4 @@
-import { Student } from "../models/Student.js";
+import { Student } from "../models/index.js";
 import { generateStudentPdf } from "../utils/generateStudentPdf.js";
 import { sanitizeFilename } from "../utils/sanitize.js";
 import streamBuffers from "stream-buffers";
@@ -8,7 +8,7 @@ class PdfService {
   static async generateSingleStudentPdf(studentId) {
     const student = await Student.findByPk(studentId);
     if (!student) {
-      throw new Error("Estudante não encontrado"); // O controller tratará isso como 404
+      throw new Error("Estudante não encontrado");
     }
 
     const pdfBuffer = await generateStudentPdf(student.toJSON());
@@ -21,7 +21,7 @@ class PdfService {
   static async generateAllStudentsPdfsAsZip() {
     const students = await Student.findAll({ raw: true });
     if (!students || students.length === 0) {
-      throw new Error("Nenhum estudante encontrado para gerar o ZIP"); // O controller tratará isso
+      throw new Error("Nenhum estudante encontrado para gerar o ZIP");
     }
 
     const pdfs = await Promise.all(
@@ -50,7 +50,7 @@ class PdfService {
 
   static async generateSelectedStudentsPdfsAsZip(studentIds) {
     if (!studentIds || studentIds.length === 0) {
-      throw new Error("Nenhum ID de estudante fornecido para o ZIP"); // O controller tratará isso
+      throw new Error("Nenhum ID de estudante fornecido para o ZIP");
     }
 
     const students = await Student.findAll({

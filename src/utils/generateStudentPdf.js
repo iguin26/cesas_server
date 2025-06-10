@@ -127,9 +127,9 @@ export const generateStudentPdf = async (student) => {
       doc.moveDown();
     }
 
-    if (student.studentAcademicReport) {
+    if (student.studentAcademicRecord) {
       const field = "Histórico escolar: ";
-      writeImage(doc, student.studentAcademicReport, field);
+      writeImage(doc, student.studentAcademicRecord, field);
     } else {
       doc.text("Histórico escolar: ");
       doc.moveDown();

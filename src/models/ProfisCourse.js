@@ -29,4 +29,4 @@ export const ProfisCourse = sequelize.define("ProfisCourses", {
     type: DataTypes.BOOLEAN,
   },
 });
-await ProfisCourse.sync({alter: true});
+// await ProfisCourse.sync({alter: true});

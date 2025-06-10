@@ -27,7 +27,7 @@ router.get("/", homeController.index);
 router.get("/faq", FaqController.listFaq);
 router.get("/faq/:search", FaqController.listFaqByLike);
 
-router.post("/students", StudentController.create);
+// router.post("/students", StudentController.create);
 
 router.get("/admin/pdf/student/:id", PdfController.generateStudentPdfById);
 router.get("/admin/pdf/all", PdfController.generateAllStudentsPdfs);

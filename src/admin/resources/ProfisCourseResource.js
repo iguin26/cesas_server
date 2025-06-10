@@ -1,20 +1,14 @@
-import { ProfisCourse} from "../../models/ProfisCourse.js";
+import { ProfisCourse } from "../../models/ProfisCourse.js";
 import { Components } from "../components/components.js";
 import {
   uploadBeforeHook,
   uploadAfterHook,
-} from "../actions/course-upload-image.hook.js";
+} from "../actions/upload-image.hook.js";
 
 export const ProfisCourseResource = {
   resource: ProfisCourse,
   options: {
-    listProperties: [
-      "id",
-      "name",
-      "uploadImage",
-      "start_date",
-      "end_date",
-    ],
+    listProperties: ["id", "name", "uploadImage", "start_date", "end_date"],
     properties: {
       name: {
         position: 1,
@@ -39,9 +33,9 @@ export const ProfisCourseResource = {
         position: 7,
       },
       nightShiftAvailable: {
-        position: 8
+        position: 8,
       },
-      
+
       uploadImage: {
         isRequired: true,
         type: "mixed",
