@@ -22,6 +22,7 @@ export const CardResource = {
 
     actions: {
       new: { isAccessible: false },
+      delete: { isAccessible: false },
     },
   },
 };
