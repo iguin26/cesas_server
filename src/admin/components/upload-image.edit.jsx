@@ -6,6 +6,7 @@ const Edit = (props) => {
   const [dropZoneKey, setDropZoneKey] = useState(0);
 
   const backendError = record.errors?.uploadImage?.message;
+
   const uploadedPhoto = record.params.image;
   const photoToUpload = record.params[property.name];
 

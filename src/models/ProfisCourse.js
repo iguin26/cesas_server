@@ -1,8 +1,7 @@
 import { sequelize } from "../config/db.js";
 import { DataTypes } from "sequelize";
-import { Subject } from "./Subject.js";
 
-export const Course = sequelize.define("Course", {
+export const ProfisCourse = sequelize.define("ProfisCourses", {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -13,19 +12,21 @@ export const Course = sequelize.define("Course", {
   end_date: {
     type: DataTypes.DATEONLY,
   },
-  subject: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    // references: {
-    //   model: Subject,
-    //   key: "id",
-    // },
-  },
   image: {
     type: DataTypes.STRING,
+    allowNull: true,
   },
-  show: {
+  description: {
+    type: DataTypes.STRING,
+  },
+  morningShiftAvailable: {
+    type: DataTypes.BOOLEAN,
+  },
+  afternoonShiftAvailable: {
+    type: DataTypes.BOOLEAN,
+  },
+  nightShiftAvailable: {
     type: DataTypes.BOOLEAN,
   },
 });
-// await Course.sync({ alter: true });
+await ProfisCourse.sync({alter: true});

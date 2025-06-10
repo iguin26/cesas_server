@@ -8,4 +8,4 @@
 //     unique: true,
 //   },
 // });
-// // await Status.sync();
+await Status.sync();
