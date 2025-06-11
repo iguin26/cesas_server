@@ -1,42 +1,47 @@
-import { Course } from "../../models/index.js";
+import { ejaCourse} from "../../models/ejaCourse.js";
 import { Components } from "../components/components.js";
 import {
   uploadBeforeHook,
   uploadAfterHook,
-} from "../actions/course-upload-image.hook.js";
+} from "../actions/upload-image.hook.js";
 
-export const CourseResource = {
-  resource: Course,
+export const ejaCourseResource = {
+  resource: ejaCourse,
   options: {
     listProperties: [
       "id",
       "name",
-      "subject",
       "uploadImage",
-      "show",
       "start_date",
       "end_date",
     ],
     properties: {
-      image: {
-        isVisible: false,
-      },
       name: {
         position: 1,
       },
-      subject: {
+      description: {
         position: 2,
       },
-      show: {
+      start_date: {
         position: 3,
       },
-      start_date: {
+      end_date: {
         position: 4,
       },
-      end_date: {
+      image: {
+        isVisible: false,
         position: 5,
       },
-
+      morningShiftAvailable: {
+        position: 6,
+      },
+      afternoonShiftAvailable: {
+        position: 7,
+      },
+      nightShiftAvailable: {
+        position: 8
+      },
+      
       uploadImage: {
         isRequired: true,
         type: "mixed",

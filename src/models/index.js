@@ -1,15 +1,15 @@
 import { sequelize } from "../config/db.js";
-import { Course } from "./Course.js";
+// import { Course } from "./ProfisCourse.js";
 import { Subject } from "./Subject.js";
-import { Student } from "./Student.js";
+import { ejaStudent } from "./ejaStudent.js";
 
-Course.belongsTo(Subject, {
-  foreignKey: "subject",
-  onDelete: "SET NULL",
-});
-Subject.hasMany(Course, {
-  foreignKey: "subject",
-});
+// Course.belongsTo(Subject, {
+//   foreignKey: "subject",
+//   onDelete: "SET NULL",
+// });
+// Subject.hasMany(Course, {
+//   foreignKey: "subject",
+// });
 
 // Course.hasMany(Student, {
 //   foreignKey: "course",
@@ -21,4 +21,4 @@ Subject.hasMany(Course, {
 //   onDelete: "SET NULL",
 // });
 
-export { sequelize, Course, Subject, Student };
+export { sequelize, Subject, ejaStudent as Student };

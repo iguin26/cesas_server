@@ -1,5 +1,5 @@
 import { where } from "sequelize";
-import {Faq} from ('../models/Faq.js');
+import {Faq} from '../models/Faq.js';
 
 
 class FaqService {

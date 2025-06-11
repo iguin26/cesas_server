@@ -3,7 +3,7 @@ import { Components } from "../components/components.js";
 import {
   uploadBeforeHook,
   uploadAfterHook,
-} from "../actions/course-upload-image.hook.js";
+} from "../actions/upload-image.hook.js";
 
 export const HomeResource = {
   resource: Home,

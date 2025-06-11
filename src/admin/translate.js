@@ -44,6 +44,20 @@ export const translations = {
       image: "Imagem apenas img",
       status: "Status",
       medical_report: "Laudo Médico",
+      description: "Descrição",
+      morningShiftAvailable: "Turno Matutino Disponível",
+      afternoonShiftAvailable: "Turno Vespertino Disponível",
+      nightShiftAvailable: "Turno Noturno Disponível"
+    
+    },
+    actions: {
+      viewIndividualPdf: "Visualizar PDF do aluno",
+    },
+    components: {
+      Login: {
+        welcomeHeader: "Seja Bem-vindo",
+        welcomeMessage: "ao painel admnistrativo CESAS!",
+      },
     },
   },
 };
