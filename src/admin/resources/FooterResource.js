@@ -39,6 +39,7 @@ export const FooterResource = {
       delete: {
         isAccessible: false,
       },
+      bulkDelete: { isAccessible: false }
     },
   },
 };

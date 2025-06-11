@@ -53,4 +53,4 @@ class ValidaCpf {
 export default ValidaCpf;
 
 // Como módulo CommonJS (opcional)
-module.exports = ValidaCpf;
+// module.exports = ValidaCpf;

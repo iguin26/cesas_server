@@ -1,9 +1,10 @@
 import express from "express";
+import cors from "cors";
 import "dotenv/config";
 import { admin } from "./admin/admin.js";
 import { sessionConfig } from "./config/session.js";
 import { router } from "./routes.js";
-import { buildAuthenticatedRouter } from "@adminjs/express";
+import { buildAuthenticatedRouter, name } from "@adminjs/express";
 import { authenticate } from "./services/authService.js";
 import multer from "multer";
 import bodyParser from "body-parser";
@@ -17,9 +18,31 @@ const __dirname = path.dirname(__filename);
 
 export const app = express();
 
+// Configuração do AdminJS
+const adminRouter = buildAuthenticatedRouter(
+  admin,
+  {
+    authenticate,
+    cookieName: "adminjs",
+    cookiePassword: "sessionsecret",
+  },
+  null,
+  sessionConfig
+);
+
+app.use(admin.options.rootPath, adminRouter);
+
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
+app.use(express.static(path.join(__dirname, "..", "public")));
+
+app.use(cors({
+  origin: "http://localhost:5173", // ou a URL do seu frontend
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 app.use(bodyParser.json());
+app.use(express.json());
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -71,17 +94,4 @@ app.get("/file/:id", (req, res) => {
     });
 });
 
-// Configuração do AdminJS
-const adminRouter = buildAuthenticatedRouter(
-  admin,
-  {
-    authenticate,
-    cookieName: "adminjs",
-    cookiePassword: "sessionsecret",
-  },
-  null,
-  sessionConfig
-);
-
-app.use(admin.options.rootPath, adminRouter);
 app.use(router);

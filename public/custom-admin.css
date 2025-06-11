@@ -1,0 +1,20 @@
+/* section[data-css="sidebar-footer"] {
+  display: none !important;
+} */
+.login__Wrapper div.adminjs_Illustration {
+  display: none !important;
+}
+/*  .login__Wrapper img[alt="CESAS"] {
+  display: none !important;
+} */
+
+.login__Wrapper section.adminjs_Box.eHpqWf {
+  background-image: url("uploads/logo/logo-cesas-login.png");
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 200px;
+
+  padding: 0 !important;
+}
