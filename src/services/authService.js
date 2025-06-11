@@ -1,31 +1,24 @@
-import { where } from 'sequelize';
-import { findOne } from '../models/Admin.js';
-import { compare } from 'bcrypt';
+import { Admin } from "../models/Admin.js";
+import { compare } from "bcrypt";
 
-async function authenticateAdmin(enteredPassword){
-  try{
-    //pega o adminn pelo nome de usuario
-    const admin = await findOne({where: {username: 'admin'}});
+const rawEmail = await Admin.findOne({
+  attributes: ["login"],
+  raw: true,
+});
+const rawPassword = await Admin.findOne({
+  attributes: ["password"],
+  raw: true,
+});
 
-    if(!admin){
-      console.log('Admin nao encontrado');
-      return false;
-    }
+const DEFAULT_ADMIN = {
+  email: rawEmail.login,
+  password: rawPassword.password,
+};
+export const authenticate = async (email, password) => {
+  const check = await compare(password, DEFAULT_ADMIN.password);
 
-    //consfere se a senha bate comm o hash do banco
-    const match = await compare(enteredPassword, admin.password);
-
-    if(match){
-      console.log('Autenticacao bem feita');
-      return true;
-    }else{
-      console.log("Senha incorreta");
-      return false;
-    }
-
-  }catch(erro){
-    console.error('Erro na autenticacao', erro);
-    return false;
+  if (email === DEFAULT_ADMIN.email && check) {
+    return Promise.resolve(DEFAULT_ADMIN);
   }
-}
-
+  return null;
+};

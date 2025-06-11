@@ -1,16 +1,15 @@
-import { create } from '../models/Admin.js';
+import { create } from "../models/Admin.js";
 
-async function createAdmin(){
-    try{
-        const admin = await create({
-            username: 'admin',
-            password: 'senha123',
+const login = "CESAS-admin";
+const password = "projetocesas";
 
-        });
-        console.log('Admin criado com sucesso', admin.username);
-    } catch(erro){
-        console.error('Erro ao criar admin', erro);
-    }
+async function createAdmin() {
+  try {
+    const admin = await create(login, password);
+    console.log("Admin criado com sucesso");
+  } catch (erro) {
+    console.error("Erro ao criar admin", erro);
+  }
 }
 
 createAdmin();

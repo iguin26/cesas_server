@@ -1,10 +1,9 @@
-import { options } from "pdfkit";
 import { sequelize } from "../config/db.js";
 import { DataTypes } from "sequelize";
-const bcrypt = require('bcrypt')
+import bcrypt from "bcrypt";
 // import { Role } from "./Role.js";
 
-const Admin = sequelize.define("Admin", {
+export const Admin = sequelize.define("Admin", {
   name: {
     type: DataTypes.STRING,
   },
@@ -26,11 +25,18 @@ const Admin = sequelize.define("Admin", {
   // },
 });
 
-Admin.beforeCreate(async(admin, options) => {
-  if(admin.password){
-    admin.password = await bcrypt.hash(admin.password, 10);
-  }
-});
+const hashPassword = async (password) => {
+  const hashedPassword = await bcrypt.hash(password, 10);
+  console.log(hashedPassword);
+  return hashedPassword;
+};
 
-module.exports = Admin;
-
+export const create = async (login, password) => {
+  const hashedPassword = await hashPassword(password);
+  console.log(password);
+  await Admin.create({
+    name: "admin",
+    login: login,
+    password: hashedPassword,
+  });
+};
