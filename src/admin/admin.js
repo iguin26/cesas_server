@@ -54,4 +54,4 @@ export const admin = new AdminJS({
     styles: ["/custom-admin.css"],
   },
 });
-admin.watch();
+// admin.watch();

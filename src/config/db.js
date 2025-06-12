@@ -4,6 +4,12 @@ import "dotenv/config";
 export const sequelize = new Sequelize(process.env.DB, {
   dialect: "postgres",
   logging: false,
+  // dialectOptions: {
+  //   ssl: {
+  //     require: true,
+  //     rejectUnauthorized: false // <<<<<<< YOU NEED THIS
+  //   }
+  // },
 });
 
 try {
