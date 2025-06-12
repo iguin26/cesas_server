@@ -48,20 +48,20 @@ export const generateStudentPdf = async (student) => {
     doc.text(`Nome: ${student.name}`);
     doc.text(`Tipo: ${student.applyType}`);
     doc.text(`Turno: ${student.shift}`);
-    if (student.legacyStudent) {
-      doc.text(`Já foi estudante: Sim`);
-    } else {
-      doc.text(`Já foi estudante: Não`);
-    }
-    if (student.disabledStudent) {
-      doc.text(`Tem problemas de saúde?: Sim`);
-    } else {
-      doc.text(`Tem problemas de saúde?: Não`);
-    }
 
-    if (student.socialName) {
-      doc.text(`Nome social: ${student.socialName}`);
-    }
+    student.legacyStudent
+      ? doc.text(`Já foi estudante: Sim`)
+      : doc.text(`Já foi estudante: Não`);
+
+    student.disabledStudent
+      ? doc.text(`Tem problemas de saúde?: Sim`)
+      : doc.text(`Tem problemas de saúde?: Não`);
+
+    student.recordlessStudent
+      ? doc.text("Necessita de exame de classificação ou reclassificação? Sim")
+      : doc.text("Necessita de exame de classificação ou reclassificação? Não");
+
+    student.socialName ? doc.text(`Nome social: ${student.socialName}`) : "";
 
     doc.text(`Data de nacimento: ${student.birthDate}`);
     doc.text(`CPF: ${student.cpf}`);

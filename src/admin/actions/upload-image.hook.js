@@ -3,7 +3,6 @@ import fs from "fs";
 import { ValidationError } from "adminjs";
 
 export const uploadBeforeHook = async (request, context) => {
-  console.log("before hook");
   if (request.method === "get") return request;
 
   if (request.method === "post") {
@@ -44,8 +43,6 @@ export const uploadBeforeHook = async (request, context) => {
 };
 
 export const uploadAfterHook = async (response, request, context) => {
-  console.log("after hook");
-
   const { record, uploadImage, resource } = context;
   const entity = resource._decorated?.id() || resource.id();
 

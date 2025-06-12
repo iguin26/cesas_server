@@ -1,6 +1,6 @@
-import { Components } from "../components/components.js";
+import { Components } from "../../components/components.js";
 
-export const downloadOnePdf = {
+export const downloadSinglePdf = {
   actionType: "record",
   icon: "Clipboard",
   label: "Visualizar PDF do Aluno",
@@ -28,5 +28,5 @@ export const downloadOnePdf = {
       },
     };
   },
-  component: Components.OpenPdfInNewTab,
+  component: Components.DownloadSinglePdf,
 };

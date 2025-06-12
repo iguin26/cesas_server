@@ -11,6 +11,7 @@ import ejaSubmitFormTitleController from "./controllers/ejaSubmitFormTitleContro
 import profisSubmitFormTitleController from "./controllers/profisSubmitFormTitleController.js";
 import footerController from "./controllers/footerController.js";
 import CourseService from "./services/courseService.js";
+import CsvController from "./controllers/csvControllers.js";
 
 export const router = express.Router();
 
@@ -32,6 +33,16 @@ router.get("/faq/:search", FaqController.listFaqByLike);
 router.get("/admin/pdf/student/:id", PdfController.generateStudentPdfById);
 router.get("/admin/pdf/all", PdfController.generateAllStudentsPdfs);
 router.get("/admin/pdf/selected", PdfController.generateSelectedStudentsPdfs);
+
+router.get(
+  "/admin/csv/profis-student/:id",
+  CsvController.generateStudentCsvById
+);
+router.get("/admin/csv/profis-all", CsvController.generateAllStudentsCsv);
+router.get(
+  "/admin/csv/profis-selected",
+  CsvController.generateSelectedStudentsCsv
+);
 // router.post('/students', StudentController.insertStudent);
 
 router.get(
