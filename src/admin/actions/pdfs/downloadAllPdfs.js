@@ -1,4 +1,4 @@
-import { Components } from "../components/components.js";
+import { Components } from "../../components/components.js";
 
 export const downloadAllPdfs = {
   actionType: "resource",

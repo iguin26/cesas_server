@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const OpenPdfInNewTab = (props) => {
+const DownloadSinglePdf = (props) => {
   const { redirectUrl } = props.record.params;
   const navigate = useNavigate();
 
@@ -15,4 +15,4 @@ const OpenPdfInNewTab = (props) => {
   return null;
 };
 
-export default OpenPdfInNewTab;
+export default DownloadSinglePdf;

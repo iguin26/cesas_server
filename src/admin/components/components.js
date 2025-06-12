@@ -5,19 +5,31 @@ const componentLoader = new ComponentLoader();
 const Components = {
   Edit: componentLoader.add("Edit", "./upload-image.edit.jsx"),
   List: componentLoader.add("List", "./upload-image.list.jsx"),
-  OpenPdfInNewTab: componentLoader.add(
-    "OpenPdfInNewTab",
-    "./openPdfInNewTab.jsx"
+  DownloadSinglePdf: componentLoader.add(
+    "DownloadSinglePdf",
+    "./pdfs/downloadSinglePdf.jsx"
   ),
   DownloadAllPdfs: componentLoader.add(
     "DownloadAllPdfs",
-    "./downloadAllPdfs.jsx"
+    "./pdfs/downloadAllPdfs.jsx"
   ),
   DownloadSelectedPdfs: componentLoader.add(
     "DownloadSelectedPdfs",
-    "./downloadSelectedPdfs.jsx"
+    "./pdfs/downloadSelectedPdfs.jsx"
   ),
   HomePage: componentLoader.add("HomePage", "./homePage.jsx"),
+  DownloadSingleCsv: componentLoader.add(
+    "DownloadSingleCsv",
+    "./csvs/downloadSingleCsv.jsx"
+  ),
+  DownloadSelectedCsvs: componentLoader.add(
+    "DownloadSelectedCsvs",
+    "./csvs/downloadSelectedCsvs.jsx"
+  ),
+  DownloadAllCsvs: componentLoader.add(
+    "DownloadAllCsvs",
+    "./csvs/downloadAllCsvs.jsx"
+  ),
 };
 
 export { componentLoader, Components };
