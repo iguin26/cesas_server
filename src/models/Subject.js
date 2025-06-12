@@ -7,4 +7,4 @@ export const Subject = sequelize.define("Subject", {
     unique: true,
   },
 });
-// await Subject.sync({ alter: true });
+await Subject.sync();

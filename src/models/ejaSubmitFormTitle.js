@@ -6,4 +6,4 @@ export const ejaSubmitFormTitle = sequelize.define("ejaSubmitFormTitle", {
     type: DataTypes.STRING,
   },
 });
-// await ejaSubmitFormTitle.sync();
+await ejaSubmitFormTitle.sync();

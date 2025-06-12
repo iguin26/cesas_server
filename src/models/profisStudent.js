@@ -55,4 +55,4 @@ export const profisStudent = sequelize.define("profisStudent", {
     type: DataTypes.STRING, // ------------------------------
   },
 });
-// await profisStudent.sync();
+await profisStudent.sync();

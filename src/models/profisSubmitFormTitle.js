@@ -6,4 +6,4 @@ export const profisSubmitFormTitle = sequelize.define("profisSubmitFormTitle", {
     type: DataTypes.STRING,
   },
 });
-// await profisSubmitFormTitle.sync();
+await profisSubmitFormTitle.sync();
