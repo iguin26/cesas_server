@@ -12,7 +12,7 @@ export const ejaSubmitFormTitleResource = {
                 isAccessible: true
             },
             delete: { isAccessible: false },
-            new: { isAccessible: false },
+            new: { isAccessible: true },
             bulkDelete: { isAccessible: false },
         },
     },

@@ -31,7 +31,7 @@ export const FooterResource = {
     },
     actions: {
       new: {
-        isAccessible: false,
+        isAccessible: true,
       },
       list: {
         showFilter: false,
