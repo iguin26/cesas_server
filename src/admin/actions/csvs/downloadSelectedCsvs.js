@@ -2,7 +2,7 @@ import { Components } from "../../components/components.js";
 
 export const downloadSelectedCsvs = {
   actionType: "bulk",
-  icon: "DocumentDownload",
+  icon: "Download",
   label: "Baixar CSVs Selecionados",
   handler: (request, response, context) => {
     const { records } = context;

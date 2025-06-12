@@ -2,7 +2,7 @@ import { Components } from "../../components/components.js";
 
 export const downloadSingleCsv = {
   actionType: "record",
-  icon: "DocumentDownload",
+  icon: "Download",
   label: "Baixar CSV",
   handler: (request, response, context) => {
     const { record } = context;

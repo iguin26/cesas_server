@@ -2,7 +2,7 @@ import { Components } from "../../components/components.js";
 
 export const downloadSelectedPdfs = {
   actionType: "bulk",
-  icon: "Download",
+  icon: "Clipboard",
   label: "Gerar PDFs (selecionados)",
   handler: async (request, response, context) => {
     const { records } = context;

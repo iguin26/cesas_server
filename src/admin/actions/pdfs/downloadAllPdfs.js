@@ -2,7 +2,7 @@ import { Components } from "../../components/components.js";
 
 export const downloadAllPdfs = {
   actionType: "resource",
-  icon: "Download",
+  icon: "Clipboard",
   label: "Gerar PDFs (ZIP)",
   handler: async (request, response, context) => {
     const { records } = context;
