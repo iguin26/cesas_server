@@ -17,7 +17,7 @@ export const ProfisCourse = sequelize.define("ProfisCourses", {
     allowNull: true,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1024),
   },
   morningShiftAvailable: {
     type: DataTypes.BOOLEAN,
@@ -29,4 +29,4 @@ export const ProfisCourse = sequelize.define("ProfisCourses", {
     type: DataTypes.BOOLEAN,
   },
 });
-// await ProfisCourse.sync({alter: true});
+await ProfisCourse.sync({alter: true});

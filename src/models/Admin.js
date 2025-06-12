@@ -16,6 +16,9 @@ export const Admin = sequelize.define("Admin", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+  freezeTableName: true,  // 👈 impede pluralização
+  tableName: 'admin'
   // role: {
   //   type: DataTypes.INTEGER,
   //   references: {
@@ -40,3 +43,8 @@ export const create = async (login, password) => {
     password: hashedPassword,
   });
 };
+
+await sequelize.sync(); // cria as tabelas que não existem
+
+
+export default Admin

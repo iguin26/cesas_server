@@ -1,7 +1,12 @@
 export const translations = {
   "pt-BR": {
     labels: {
-      Courses: "Cursos",
+      ejaCourses: "Cursos EJA",
+      ejaStudents: "Alunos EJA",
+      ejaSubmitFormTitles: "Título Formulário EJA",
+      profisSubmitFormTitles: "Título Formulário Profissionalizante",
+      profisStudents: "Alunos Profissionalizante",
+      ProfisCourses: "Cursos Profissionalizantes",
       localhost: "Administração",
       Subjects: "Matérias",
       Cards: "Cards Página Principal",

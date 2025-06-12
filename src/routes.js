@@ -54,7 +54,6 @@ router.get(
   profisSubmitFormTitleController.getSubmitFormTitle
 );
 router.get("/getFooterData", footerController.getFooterData);
-// router.get("/getCursos", CourseService.listAllCourses);
 
 router.get("/getProfisCursos", async (req, res) => {
   try {
@@ -73,6 +72,18 @@ router.get("/getEJACursos", async (req, res) => {
     res.status(500).json({ error: "Erro ao listar cursos" });
   }
 });
+
+// import Admin from "./models/Admin.js"
+// router.get('/test-admin', async (req, res) => {
+//   try {
+//     const admins = await Admin.findAll();
+//     res.json(admins);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ erro: 'Deu ruim' });
+//   }
+// });
+
 
 router.post(
   "/eja/students",

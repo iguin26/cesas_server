@@ -17,7 +17,7 @@ export const ejaCourse = sequelize.define("ejaCourses", {
     allowNull: true,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(1024),
   },
   morningShiftAvailable: {
     type: DataTypes.BOOLEAN,
@@ -29,4 +29,4 @@ export const ejaCourse = sequelize.define("ejaCourses", {
     type: DataTypes.BOOLEAN,
   },
 });
-// await ejaCourse.sync();
+await ejaCourse.sync({alter: true});
