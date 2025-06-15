@@ -7,6 +7,7 @@ class CourseService {
     static async listAllProfisCourses() {
         try {
             return await ProfisCourse.findAll({
+                order: [['id', 'ASC']],
             });
         } catch (error) {
             console.error("Erro no Service ao listar Cursos", error);
@@ -17,6 +18,7 @@ class CourseService {
     static async listAllEJACourses() {
         try {
             return await ejaCourse.findAll({
+                order: [['id', 'ASC']],
             });
         } catch (error) {
             console.error("Erro no Service ao listar Cursos", error);

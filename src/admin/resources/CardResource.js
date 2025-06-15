@@ -3,26 +3,19 @@ import { Card } from "../../models/Card.js";
 export const CardResource = {
   resource: Card,
   options: {
-    listProperties: ["id", "name", "title", "text", "show"],
+    listProperties: ["id","title", "description"],
     properties: {
-      name: {
-        isDisabled: true,
+      title: {
         position: 2,
       },
-      title: {
+      description: {
         position: 3,
-      },
-      text: {
-        position: 4,
-      },
-      show: {
-        position: 5,
       },
     },
 
     actions: {
-      new: { isAccessible: false },
-      delete: { isAccessible: false },
+      new: { isAccessible: true },
+      delete: { isAccessible: true},
     },
   },
 };

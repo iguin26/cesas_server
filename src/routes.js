@@ -2,36 +2,24 @@ import express from "express";
 import { homeController } from "./controllers/homeControllers.js";
 import ejaStudentController from "./controllers/ejaStudentController.js";
 import profisStudentController from "./controllers/profisStudentController.js";
-import FaqController from "./controllers/faqControllers.js";
 import PdfController from "./controllers/pdfControllers.js";
-// import CourseController from "./controllers/coursesControllers.js";
-// import StudentController from "./controllers/userControllers.js";
 import { upload } from "./config/multer.js";
 import ejaSubmitFormTitleController from "./controllers/ejaSubmitFormTitleController.js";
 import profisSubmitFormTitleController from "./controllers/profisSubmitFormTitleController.js";
 import footerController from "./controllers/footerController.js";
 import CourseService from "./services/courseService.js";
 import CsvController from "./controllers/csvControllers.js";
+import CardService from './services/cardsService.js'
+import FaqService from "./services/faqService.js";
 
 export const router = express.Router();
 
 router.get("/", homeController.index);
 
-// router.get("/auth/login", showLogin);
-
-// router.get("/auth/register", showRegister);
-
-// router.get("/courses", CourseController.listCourse);
-
-// router.get("/courses/:name", CourseController.listCoursesByName);
-
-router.get("/faq", FaqController.listFaq);
-router.get("/faq/:search", FaqController.listFaqByLike);
-
-// router.post("/students", StudentController.create);
-
 router.get("/admin/pdf/student/:id", PdfController.generateStudentPdfById);
+
 router.get("/admin/pdf/all", PdfController.generateAllStudentsPdfs);
+
 router.get("/admin/pdf/selected", PdfController.generateSelectedStudentsPdfs);
 
 router.get(
@@ -43,7 +31,6 @@ router.get(
   "/admin/csv/profis-selected",
   CsvController.generateSelectedStudentsCsv
 );
-// router.post('/students', StudentController.insertStudent);
 
 router.get(
   "/ejaSubmitFormTitle",
@@ -70,6 +57,33 @@ router.get("/getEJACursos", async (req, res) => {
     res.json(cursos);
   } catch (error) {
     res.status(500).json({ error: "Erro ao listar cursos" });
+  }
+});
+
+router.get("/getCards", async (req, res) => {
+  try {
+    const cards = await CardService.listAllCards();
+    res.json(cards);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao listar cards" });
+  }
+});
+
+router.get("/getEJAFaqs", async (req, res) => {
+  try {
+    const cards = await FaqService.listAllEJAFaqs();
+    res.json(cards);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao listar faqs" });
+  }
+});
+
+router.get("/getProfisFaqs", async (req, res) => {
+  try {
+    const cards = await FaqService.listAllProfisFaqs();
+    res.json(cards);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao listar faqs" });
   }
 });
 

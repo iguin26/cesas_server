@@ -4,7 +4,8 @@ import * as AdminJSSequelize from "@adminjs/sequelize";
 import { ProfisCourseResource } from "./resources/ProfisCourseResource.js";
 import { SubjectResource } from "../admin/resources/SubjectResource.js";
 import { CardResource } from "./resources/CardResource.js";
-import { FaqResource } from "./resources/FaqResource.js";
+import { EjaFaqResource } from "./resources/ejaFaqResource.js";
+import { ProfisFaqResource } from "./resources/profisFaqResource.js";
 import { FooterResource } from "./resources/FooterResource.js";
 import { HomeResource } from "./resources/HomeResource.js";
 import { ejaStudentResource } from "./resources/ejaStudentResource.js";
@@ -29,7 +30,8 @@ export const admin = new AdminJS({
     profisStudentResource,
     SubjectResource,
     HomeResource,
-    FaqResource,
+    EjaFaqResource,
+    ProfisFaqResource,
     FooterResource,
     ejaSubmitFormTitleResource,
     profisSubmitFormTitleResource,
