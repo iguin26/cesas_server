@@ -11,6 +11,7 @@ import CourseService from "./services/courseService.js";
 import CsvController from "./controllers/csvControllers.js";
 import CardService from './services/cardsService.js'
 import FaqService from "./services/faqService.js";
+import TeamService from "./services/teamService.js";
 
 export const router = express.Router();
 
@@ -84,6 +85,20 @@ router.get("/getProfisFaqs", async (req, res) => {
     res.json(cards);
   } catch (error) {
     res.status(500).json({ error: "Erro ao listar faqs" });
+  }
+});
+
+router.get("/getEquipe", async (req, res) => {
+  try {
+    const staff = await TeamService.listStaff();
+    const supervision = await TeamService.listSupervision();
+    const coordinators = await TeamService.listCoordinators();
+    const teaching_staff = await TeamService.listTeachingStaff();
+
+
+    res.json({ staff, supervision, coordinators, teaching_staff });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao listar equipe" });
   }
 });
 
