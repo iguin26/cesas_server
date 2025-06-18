@@ -7,7 +7,7 @@ import fs from "fs";
 const writeImage = (doc, imgPath, field) => {
   const maxWidth = doc.page.width - 50;
   const maxHeight = doc.page.height / 3;
-  const availableHeight = doc.page.height - doc.y - 50;
+  const availableHeight = doc.page.height - doc.y - 50; 
 
   if (availableHeight < maxHeight) {
     doc.addPage();

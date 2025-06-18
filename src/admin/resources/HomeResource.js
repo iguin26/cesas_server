@@ -33,7 +33,7 @@ export const HomeResource = {
 
     actions: {
       new: {
-        isAccessible: false,
+        isAccessible: true,
       },
       list: {
         showFilter: true,
