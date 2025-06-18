@@ -33,16 +33,16 @@ export const HomeResource = {
 
     actions: {
       new: {
-        isAccessible: false,
+        isAccessible: true,
       },
       list: {
-        showFilter: false,
+        showFilter: true,
       },
       delete: {
         isAccessible: false,
       },
       show: {
-        isVisible: false,
+        isVisible: true,
       },
       edit: {
         before: [uploadBeforeHook],

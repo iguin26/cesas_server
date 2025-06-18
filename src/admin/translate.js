@@ -17,7 +17,8 @@ export const translations = {
       EjaFaqs: "Perguntas e Repostas EJA",
       ProfisFaqs: "Perguntas e Repostas Profissionalizante",
       Footer: "Rodapé",
-      Home: "Página Principal",
+      Homes: "Mural Página Principal",
+      Events: "Eventos",
       Students: "Estudantes",
       show: {
         true: "Sim",

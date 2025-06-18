@@ -12,6 +12,7 @@ import CsvController from "./controllers/csvControllers.js";
 import CardService from './services/cardsService.js'
 import FaqService from "./services/faqService.js";
 import TeamService from "./services/teamService.js";
+import HomeService from "./services/homeService.js";
 
 export const router = express.Router();
 
@@ -99,6 +100,17 @@ router.get("/getEquipe", async (req, res) => {
     res.json({ staff, supervision, coordinators, teaching_staff });
   } catch (error) {
     res.status(500).json({ error: "Erro ao listar equipe" });
+  }
+});
+
+router.get("/getHomeData", async (req, res) => {
+  try {
+    const data = await HomeService.listHomeData();
+    const events = await HomeService.listEvents();
+
+    res.json({ data,events});
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao listar infos do mural" });
   }
 });
 

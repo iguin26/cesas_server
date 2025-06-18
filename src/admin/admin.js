@@ -2,7 +2,6 @@
 import AdminJS from "adminjs";
 import * as AdminJSSequelize from "@adminjs/sequelize";
 import { ProfisCourseResource } from "./resources/ProfisCourseResource.js";
-// import { SubjectResource } from "../admin/resources/SubjectResource.js";
 import { CardResource } from "./resources/CardResource.js";
 import { EjaFaqResource } from "./resources/ejaFaqResource.js";
 import { ProfisFaqResource } from "./resources/profisFaqResource.js";
@@ -19,6 +18,7 @@ import { StaffResource } from "./resources/StaffResource.js";
 import { CoordinatorsResource } from "./resources/CoordinatorsResource.js";
 import { SupervisionResource } from "./resources/SupervisionResource.js";
 import { TeachingStaffResource } from "./resources/TeachingStaffResource.js";
+import { EventResource } from "./resources/EventResource.js";
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -36,6 +36,7 @@ export const admin = new AdminJS({
     CoordinatorsResource,
     SupervisionResource,
     TeachingStaffResource,
+    EventResource,
     HomeResource,
     EjaFaqResource,
     ProfisFaqResource,
