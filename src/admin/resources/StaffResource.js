@@ -18,7 +18,7 @@ export const StaffResource = {
     },
 
     actions: {
-      new: { isAccessible: true},
+      new: { isAccessible: false},
       edit: {isAccessible: true},
       delete: { isAccessible: false},
     },
