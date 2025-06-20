@@ -1,5 +1,7 @@
 import PDFDocument from "pdfkit";
 import streamBuffers from "stream-buffers";
+import path from "path";
+import fs from "fs";
 
 const writeImage = (doc, imgPath, field) => {
   const maxWidth = doc.page.width - 50; // 50 de margemzinha em cd lado p nn ficar mto esticadoo
@@ -12,11 +14,14 @@ const writeImage = (doc, imgPath, field) => {
   }
 
   try {
+    if (!fs.existsSync(imgPath))
+      throw new Error("Imagem não encontrada: " + imgPath);
     const image = doc.openImage(imgPath);
     const scale = Math.min(maxWidth / image.width, maxHeight / image.height);
     const imgWidth = image.width * scale;
     const imgHeight = image.height * scale;
 
+    doc.font("OpenSans").fontSize(12);
     doc.text(field);
 
     doc.image(image, (doc.page.width - imgWidth) / 2, doc.y, {
@@ -26,9 +31,12 @@ const writeImage = (doc, imgPath, field) => {
     doc.y += imgHeight + 10;
     doc.moveDown();
   } catch (error) {
+    doc.font("OpenSans").fontSize(12);
     doc.text(field);
     doc.moveDown();
-    doc.fillColor("red").text("Erro ao carregar imagem.", { align: "center" });
+    doc
+      .fillColor("red")
+      .text(`Erro ao carregar imagem: ${error.message}`, { align: "center" });
     doc.fillColor("black");
     doc.moveDown();
   }
@@ -41,102 +49,189 @@ export const generateStudentPdf = async (student) => {
 
     doc.pipe(buffer);
 
-    doc.fontSize(20).text("Ficha do Aluno", { align: "center" });
+    // Registrar e carregar a fonte OpenSans
+    const fontPath = path.resolve(
+      "src/fonts/OpenSans-VariableFont_wdth,wght.ttf"
+    );
+    if (fs.existsSync(fontPath)) {
+      doc.registerFont("OpenSans", fontPath);
+      doc.font("OpenSans"); // Setar a fonte inicial como OpenSans
+    } else {
+      console.warn("Arquivo da fonte Open Sans não encontrado em:", fontPath);
+      // Vai usar a fonte padrão do PDFKit
+    }
+
+    // === Desenhar bordas na página ===
+    const drawBorders = () => {
+      const margin = 20;
+      doc.lineWidth(1);
+      doc
+        .rect(
+          margin,
+          margin,
+          doc.page.width - 2 * margin,
+          doc.page.height - 2 * margin
+        )
+        .stroke();
+    };
+    drawBorders();
+
+    try {
+      const logoPath = path.resolve("uploads/logo/logo-cesas.png");
+      console.log(logoPath);
+      const logoImage = doc.openImage(logoPath);
+
+      const logoMaxHeight = 50;
+      const scale = logoMaxHeight / logoImage.height;
+      const logoWidth = logoImage.width * scale;
+
+      doc.image(logoImage, (doc.page.width - logoWidth) / 2, 30, {
+        width: logoWidth,
+        height: logoMaxHeight,
+      });
+
+      doc.moveDown(2);
+    } catch (error) {
+      console.error(`Erro ao carregar a logo (${logoPath}):`, error.message);
+    }
+
+    doc
+      .fontSize(20)
+      .font("OpenSans")
+      .text("Ficha do Aluno", { align: "center" });
     doc.moveDown();
 
-    doc.fontSize(12);
-    doc.text(`Nome: ${student.name}`);
-    doc.text(`Tipo: ${student.applyType}`);
-    doc.text(`Turno: ${student.shift}`);
+    // === Cabeçalho destacado ===
+    const startX = 50;
+    const startY = doc.y;
+    const headerMargin = 10;
 
-    student.legacyStudent
-      ? doc.text(`Já foi estudante: Sim`)
-      : doc.text(`Já foi estudante: Não`);
+    const headerInfo = [
+      `Nome: ${student.name}`,
+      `Data de nascimento: ${student.birthDate}`,
+      `Turno: ${student.shift}`,
+      `Tipo: ${student.applyType}`,
+      `CPF: ${student.cpf}`,
+    ];
 
-    student.disabledStudent
-      ? doc.text(`Tem problemas de saúde?: Sim`)
-      : doc.text(`Tem problemas de saúde?: Não`);
+    doc.fontSize(12).fillColor("black").font("OpenSans");
 
-    student.recordlessStudent
-      ? doc.text("Necessita de exame de classificação ou reclassificação? Sim")
-      : doc.text("Necessita de exame de classificação ou reclassificação? Não");
+    // Medir altura do bloco do cabeçalho para desenhar retângulo
+    const lineHeight = 15;
+    const headerHeight = lineHeight * headerInfo.length + headerMargin * 2;
+    const headerWidth = doc.page.width - startX * 2;
 
-    student.socialName ? doc.text(`Nome social: ${student.socialName}`) : "";
+    // Desenhar retângulo de fundo e borda
+    doc
+      .rect(
+        startX - headerMargin,
+        startY - headerMargin,
+        headerWidth + headerMargin * 2,
+        headerHeight
+      )
+      .fillAndStroke("#f0f0f0", "black");
 
-    doc.text(`Data de nacimento: ${student.birthDate}`);
-    doc.text(`CPF: ${student.cpf}`);
-    doc.text(`Nacionalidade: ${student.nationality}`);
-    doc.text(`Estado: ${student.state}`);
-    doc.text(`Número do RG: ${student.idNumber}`);
-    doc.text(`Data de expedição do RG: ${student.idExpDate}`);
-    doc.text(`Órgão de expedição do RG: ${student.idIssuingBody}`);
-    doc.text(`Raça/Etnia: ${student.ethnicity}`);
-    doc.text(`CEP: ${student.cep}`);
-    doc.text(`Endereço: ${student.address}`);
-    doc.text(`Celular: ${student.cellphoneNumber}`);
-    doc.text(`Telefone: ${student.landlinePhone}`);
-    doc.text(`Telefone de emergência: ${student.emergencyPhone}`);
-    doc.text(`Nome do responsável: ${student.responsibleName}`);
-    doc.text(`RG do responsável: ${student.responsibleId}`);
-    doc.text(`Gênero: ${student.gender}`);
+    // Escrever as infos dentro do retângulo
+    doc.fillColor("black");
+    headerInfo.forEach((info, i) => {
+      doc.text(info, startX, startY + i * lineHeight);
+    });
+
+    doc.y = startY + headerHeight + 20;
+
+    // === Demais campos, sempre com fonte OpenSans ===
+    const yesNo = (bool) => (bool ? "Sim" : "Não");
+
+    doc.text(`Já foi estudante: ${yesNo(student.legacyStudent)}`, {
+      lineGap: 6,
+    });
+    doc.text(`Tem problemas de saúde?: ${yesNo(student.disabledStudent)}`, {
+      lineGap: 6,
+    });
+    doc.text(
+      `Necessita de exame de classificação ou reclassificação? ${yesNo(
+        student.recordlessStudent
+      )}`,
+      { lineGap: 6 }
+    );
+    if (student.socialName)
+      doc.text(`Nome social: ${student.socialName}`, { lineGap: 6 });
+
+    doc.text(`Nacionalidade: ${student.nationality}`, { lineGap: 6 });
+    doc.text(`Estado: ${student.state}`, { lineGap: 6 });
+    doc.text(`Número do RG: ${student.idNumber}`, { lineGap: 6 });
+    doc.text(`Data de expedição do RG: ${student.idExpDate}`, { lineGap: 6 });
+    doc.text(`Órgão de expedição do RG: ${student.idIssuingBody}`, {
+      lineGap: 6,
+    });
+    doc.text(`Raça/Etnia: ${student.ethnicity}`, { lineGap: 6 });
+    doc.text(`CEP: ${student.cep}`, { lineGap: 6 });
+    doc.text(`Endereço: ${student.address}`, { lineGap: 6 });
+    doc.text(`Celular: ${student.cellphoneNumber}`, { lineGap: 6 });
+    doc.text(`Telefone: ${student.landlinePhone}`, { lineGap: 6 });
+    doc.text(`Telefone de emergência: ${student.emergencyPhone}`, {
+      lineGap: 6,
+    });
+    doc.text(`Nome do responsável: ${student.responsibleName}`, { lineGap: 6 });
+    doc.text(`RG do responsável: ${student.responsibleId}`, { lineGap: 6 });
+    doc.text(`Gênero: ${student.gender}`, { lineGap: 6 });
 
     doc.moveDown();
 
     if (student.studentPhoto) {
-      const field = "Foto do estudante: ";
-      writeImage(doc, student.studentPhoto, field);
+      writeImage(doc, student.studentPhoto, "Foto do estudante:");
     } else {
-      doc.text("Foto do estudante: ");
+      doc.font("OpenSans").text("Foto do estudante:");
       doc.moveDown();
-      doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
+      doc.fillColor("red").text("Imagem não encontrada.", { align: "center" });
       doc.fillColor("black");
       doc.moveDown();
     }
 
     if (student.studentId) {
-      const field = "Foto do RG do estudante: ";
-
-      writeImage(doc, student.studentId, field);
+      writeImage(doc, student.studentId, "Foto do RG do estudante:");
     } else {
-      doc.text("Foto do RG do estudante: ");
+      doc.font("OpenSans").text("Foto do RG do estudante:");
       doc.moveDown();
-      doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
+      doc.fillColor("red").text("Imagem não encontrada.", { align: "center" });
       doc.fillColor("black");
       doc.moveDown();
     }
 
     if (student.studentProofOfResidence) {
-      const field = "Foto do comprovante de residência: ";
-      writeImage(doc, student.studentProofOfResidence, field);
+      writeImage(
+        doc,
+        student.studentProofOfResidence,
+        "Foto do comprovante de residência:"
+      );
     } else {
-      doc.text("Foto do comprovante de residência: ");
+      doc.font("OpenSans").text("Foto do comprovante de residência:");
       doc.moveDown();
-      doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
+      doc.fillColor("red").text("Imagem não encontrada.", { align: "center" });
       doc.fillColor("black");
       doc.moveDown();
     }
 
     if (student.studentMedicalReport) {
-      const field = "Laudo médico: ";
-      writeImage(doc, student.studentMedicalReport, field);
+      writeImage(doc, student.studentMedicalReport, "Laudo médico:");
     } else {
-      doc.text("Laudo médico: ");
+      doc.font("OpenSans").text("Laudo médico:");
       doc.moveDown();
-      doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
+      doc.fillColor("red").text("Imagem não encontrada.", { align: "center" });
       doc.fillColor("black");
       doc.moveDown();
     }
 
     if (student.studentAcademicRecord) {
-      const field = "Histórico escolar: ";
-      writeImage(doc, student.studentAcademicRecord, field);
+      writeImage(doc, student.studentAcademicRecord, "Histórico escolar:");
     } else {
-      doc.text("Histórico escolar: ");
+      doc.font("OpenSans").text("Histórico escolar:");
       doc.moveDown();
-      doc.fillColor("red").text("Imagem não encontrada. ", { align: "center" });
+      doc.fillColor("red").text("Imagem não encontrada.", { align: "center" });
       doc.fillColor("black");
       doc.moveDown();
     }
+
     doc.end();
 
     buffer.on("finish", () => resolve(buffer.getContents()));

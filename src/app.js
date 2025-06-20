@@ -35,11 +35,13 @@ app.use(admin.options.rootPath, adminRouter);
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
-app.use(cors({
-  origin: "http://localhost:5173", // ou a URL do seu frontend
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3001", // ou a URL do seu frontend
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use(bodyParser.json());
 app.use(express.json());
