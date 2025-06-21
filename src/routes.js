@@ -4,31 +4,19 @@ import ejaStudentController from "./controllers/ejaStudentController.js";
 import profisStudentController from "./controllers/profisStudentController.js";
 import FaqController from "./controllers/faqControllers.js";
 import PdfController from "./controllers/pdfControllers.js";
-// import CourseController from "./controllers/coursesControllers.js";
-// import StudentController from "./controllers/userControllers.js";
-import { upload } from "./config/multer.js";
 import ejaSubmitFormTitleController from "./controllers/ejaSubmitFormTitleController.js";
 import profisSubmitFormTitleController from "./controllers/profisSubmitFormTitleController.js";
 import footerController from "./controllers/footerController.js";
 import CourseService from "./services/courseService.js";
 import CsvController from "./controllers/csvControllers.js";
+import { uploadStudentFiles } from "./config/multer.js";
 
 export const router = express.Router();
 
 router.get("/", homeController.index);
 
-// router.get("/auth/login", showLogin);
-
-// router.get("/auth/register", showRegister);
-
-// router.get("/courses", CourseController.listCourse);
-
-// router.get("/courses/:name", CourseController.listCoursesByName);
-
 router.get("/faq", FaqController.listFaq);
 router.get("/faq/:search", FaqController.listFaqByLike);
-
-// router.post("/students", StudentController.create);
 
 router.get("/admin/pdf/student/:id", PdfController.generateStudentPdfById);
 router.get("/admin/pdf/all", PdfController.generateAllStudentsPdfs);
@@ -43,7 +31,6 @@ router.get(
   "/admin/csv/profis-selected",
   CsvController.generateSelectedStudentsCsv
 );
-// router.post('/students', StudentController.insertStudent);
 
 router.get(
   "/ejaSubmitFormTitle",
@@ -73,21 +60,9 @@ router.get("/getEJACursos", async (req, res) => {
   }
 });
 
-// import Admin from "./models/Admin.js"
-// router.get('/test-admin', async (req, res) => {
-//   try {
-//     const admins = await Admin.findAll();
-//     res.json(admins);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ erro: 'Deu ruim' });
-//   }
-// });
-
-
 router.post(
   "/eja/students",
-  upload.fields([
+  uploadStudentFiles.fields([
     { name: "studentPhoto", maxCount: 1 },
     { name: "studentProofOfResidence", maxCount: 1 },
     { name: "studentId", maxCount: 1 },
@@ -99,6 +74,6 @@ router.post(
 
 router.post(
   "/professionalizing/students",
-  upload.fields([{ name: "studentMedicalReport", maxCount: 1 }]),
+  uploadStudentFiles.fields([{ name: "studentMedicalReport", maxCount: 1 }]),
   profisStudentController.insertStudent
 );

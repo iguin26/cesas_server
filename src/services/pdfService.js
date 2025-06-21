@@ -1,4 +1,5 @@
-import { Student } from "../models/index.js";
+import { ejaStudent } from "../models/ejaStudent.js";
+import { profisStudent } from "../models/profisStudent.js";
 import { generateStudentPdf } from "../utils/generateStudentPdf.js";
 import { sanitizeFilename } from "../utils/sanitize.js";
 import streamBuffers from "stream-buffers";
@@ -6,85 +7,76 @@ import archiver from "archiver";
 
 class PdfService {
   static async generateSingleStudentPdf(studentId) {
-    const student = await Student.findByPk(studentId);
+    let student = await ejaStudent.findByPk(studentId);
+    let studentType = "ejaStudent";
+
+    if (!student) {
+      student = await profisStudent.findByPk(studentId);
+      studentType = "profisStudent";
+    }
+
     if (!student) {
       throw new Error("Estudante não encontrado");
     }
 
-    const pdfBuffer = await generateStudentPdf(student.toJSON());
+    const pdfBuffer = await generateStudentPdf(student.toJSON(), studentType);
     const safeName = sanitizeFilename(student.name).substring(0, 50);
-    const filename = `aluno-${student.id}-${safeName}.pdf`;
+    const filename = `aluno-${studentType}-${student.id}-${safeName}.pdf`;
 
     return { buffer: pdfBuffer, filename };
   }
 
-  static async generateAllStudentsPdfsAsZip() {
-    const students = await Student.findAll({ raw: true });
-    if (!students || students.length === 0) {
-      throw new Error("Nenhum estudante encontrado para gerar o ZIP");
+  static async generateAllStudentsPdf() {
+    const ejaStudents = await ejaStudent.findAll();
+    const profisStudents = await profisStudent.findAll();
+
+    const buffer = new streamBuffers.WritableStreamBuffer();
+    const archive = archiver("zip");
+
+    archive.pipe(buffer);
+
+    for (const student of ejaStudents) {
+      try {
+        const pdfBuffer = await generateStudentPdf(
+          student.toJSON(),
+          "ejaStudent"
+        );
+        const safeName = sanitizeFilename(student.name).substring(0, 50);
+        const filename = `eja-${student.id}-${safeName}.pdf`;
+        archive.append(pdfBuffer, { name: filename });
+      } catch (error) {
+        console.error(
+          `Erro ao gerar PDF para estudante EJA ${student.id}:`,
+          error
+        );
+      }
     }
 
-    const pdfs = await Promise.all(
-      students.map(async (student) => {
-        const pdfBuffer = await generateStudentPdf(student);
-        return { id: student.id, name: student.name, pdf: pdfBuffer };
-      })
-    );
-
-    const zipBuffer = new streamBuffers.WritableStreamBuffer();
-    const archive = archiver("zip", { zlib: { level: 9 } });
-
-    archive.pipe(zipBuffer);
-
-    pdfs.forEach(({ id, name, pdf }) => {
-      const safeName = sanitizeFilename(name).substring(0, 50);
-      archive.append(pdf, { name: `aluno-${id}-${safeName}_Ficha.pdf` });
-    });
+    for (const student of profisStudents) {
+      try {
+        const pdfBuffer = await generateStudentPdf(
+          student.toJSON(),
+          "profisStudent"
+        );
+        const safeName = sanitizeFilename(student.name).substring(0, 50);
+        const filename = `profis-${student.id}-${safeName}.pdf`;
+        archive.append(pdfBuffer, { name: filename });
+      } catch (error) {
+        console.error(
+          `Erro ao gerar PDF para estudante PROFIS ${student.id}:`,
+          error
+        );
+      }
+    }
 
     await archive.finalize();
-    const zipData = zipBuffer.getContents();
-    const filename = "fichas_todos_alunos.zip";
 
-    return { buffer: zipData, filename };
-  }
-
-  static async generateSelectedStudentsPdfsAsZip(studentIds) {
-    if (!studentIds || studentIds.length === 0) {
-      throw new Error("Nenhum ID de estudante fornecido para o ZIP");
-    }
-
-    const students = await Student.findAll({
-      where: { id: studentIds },
-      raw: true,
+    return new Promise((resolve, reject) => {
+      buffer.on("finish", () => {
+        resolve(buffer.getContents());
+      });
+      buffer.on("error", reject);
     });
-
-    if (!students || students.length === 0) {
-      throw new Error(
-        "Nenhum estudante encontrado para os IDs fornecidos no ZIP"
-      ); // O controller tratará isso
-    }
-
-    const pdfs = await Promise.all(
-      students.map(async (student) => {
-        const pdfBuffer = await generateStudentPdf(student);
-        return { id: student.id, name: student.name, pdf: pdfBuffer };
-      })
-    );
-
-    const zipBuffer = new streamBuffers.WritableStreamBuffer();
-    const archive = archiver("zip", { zlib: { level: 9 } });
-    archive.pipe(zipBuffer);
-
-    pdfs.forEach(({ id, name, pdf }) => {
-      const safeName = sanitizeFilename(name).substring(0, 50);
-      archive.append(pdf, { name: `aluno-${id}-${safeName}_Ficha.pdf` });
-    });
-
-    await archive.finalize();
-    const zipData = zipBuffer.getContents();
-    const filename = "fichas_alunos_selecionados.zip";
-
-    return { buffer: zipData, filename };
   }
 }
 
