@@ -1,8 +1,7 @@
 import { profisStudent } from "../models/profisStudent.js";
+import FileService from "../services/FileService.js";
 
 class profisStudentController {
-  
-  // Listar todos os estudantes
   static async listStudent(req, res) {
     try {
       const students = await profisStudent.findAll();
@@ -13,7 +12,6 @@ class profisStudentController {
     }
   }
 
-  // Criar novo estudante
   static async insertStudent(req, res) {
     try {
       const {
@@ -32,10 +30,8 @@ class profisStudentController {
         phone,
         mothersName,
         fathersName,
-        gender
+        gender,
       } = req.body;
-
-      const studentMedicalReport = req.files?.studentMedicalReport?.[0]?.path || null;
 
       const newStudent = await profisStudent.create({
         name,
@@ -54,19 +50,34 @@ class profisStudentController {
         mothersName,
         fathersName,
         gender,
-        studentMedicalReport
+        studentMedicalReport: null,
       });
+
+      console.log(`Estudante do profis criado id: ${newStudent.id}`);
+
+      if (req.files && req.files.studentMedicalReport) {
+        const savedFiles = FileService.saveStudentFiles(
+          newStudent.id,
+          req.files,
+          "profisStudent"
+        );
+
+        await newStudent.update({
+          studentMedicalReport: savedFiles.studentMedicalReport || null,
+        });
+
+        console.log("imagem do student salva");
+      }
 
       return res.status(201).json({
-        message: 'Estudante criado com sucesso!',
-        student: newStudent
+        message: "Estudante do profis criado com sucesso!",
+        student: newStudent,
       });
-
     } catch (error) {
-      console.error("Erro ao criar estudante:", error);
+      console.error("Erro ao criar estudante do profis:", error);
       return res.status(500).json({
-        message: 'Erro ao criar estudante',
-        error: error.message
+        message: "Erro ao criar estudante",
+        error: error.message,
       });
     }
   }

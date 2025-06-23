@@ -3,12 +3,12 @@ import { homeController } from "./controllers/homeControllers.js";
 import ejaStudentController from "./controllers/ejaStudentController.js";
 import profisStudentController from "./controllers/profisStudentController.js";
 import PdfController from "./controllers/pdfControllers.js";
-import { upload } from "./config/multer.js";
 import ejaSubmitFormTitleController from "./controllers/ejaSubmitFormTitleController.js";
 import profisSubmitFormTitleController from "./controllers/profisSubmitFormTitleController.js";
 import footerController from "./controllers/footerController.js";
 import CourseService from "./services/courseService.js";
 import CsvController from "./controllers/csvControllers.js";
+import { uploadStudentFiles } from "./config/multer.js";
 import CardService from './services/cardsService.js'
 import FaqService from "./services/faqService.js";
 import TeamService from "./services/teamService.js";
@@ -125,10 +125,9 @@ router.get("/getHomeData", async (req, res) => {
 //   }
 // });
 
-
 router.post(
   "/eja/students",
-  upload.fields([
+  uploadStudentFiles.fields([
     { name: "studentPhoto", maxCount: 1 },
     { name: "studentProofOfResidence", maxCount: 1 },
     { name: "studentId", maxCount: 1 },
@@ -140,6 +139,6 @@ router.post(
 
 router.post(
   "/professionalizing/students",
-  upload.fields([{ name: "studentMedicalReport", maxCount: 1 }]),
+  uploadStudentFiles.fields([{ name: "studentMedicalReport", maxCount: 1 }]),
   profisStudentController.insertStudent
 );

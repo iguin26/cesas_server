@@ -35,6 +35,7 @@ app.use(admin.options.rootPath, adminRouter);
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
+
 app.use(cors({
   origin: ["http://localhost:5173", "http://srv762003.hstgr.cloud"], // ou a URL do seu frontend
   methods: ["GET", "POST", "PUT", "DELETE"],
