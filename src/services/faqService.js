@@ -1,13 +1,14 @@
 import { where } from "sequelize";
-import {Faq} from '../models/Faq.js';
+import {EjaFaq} from '../models/ejaFaq.js';
+import {ProfisFaq} from '../models/profisFaq.js';
 
 
 class FaqService {
 
-    static async listAllFaqs(){
+    static async listAllEJAFaqs(){
         try{
-            return await Faq.findAll({
-                order: [['createdAt', 'DESC']]
+            return await EjaFaq.findAll({
+                order: [['id', 'ASC']], 
             }); 
         }catch (error) {
             console.error("Erro no Service o listar Faqs", error);
@@ -15,28 +16,15 @@ class FaqService {
         }
     }
 
-    static async findFaqsByQuestion(term){
+    static async listAllProfisFaqs(){
         try{
-            if(!term || term.trim() === ''){
-                return await this.listAllFaqs();
-            }
-
-            const faqs = await Faq.findAll({
-                where: {
-                    pergunta: { [Op.like]: `%${term}%` }
-                },
-                order: [['createdAt', 'DESC']]
-            });
-
-            if (!faqs || faqs.length === 0){
-                throw new Error('Nenhuma Faq encontrada com esse termo');
-            }
-            return faqs;
-        }catch(error){
-            console.error("Erro no service ao buscar faqs", error);
-            throw error;
+            return await ProfisFaq.findAll({
+                order: [['id', 'ASC']], 
+            }); 
+        }catch (error) {
+            console.error("Erro no Service o listar Faqs", error);
+            throw new Error('Falha ao buscar Faqs no banco de dados');
         }
-
     }
 }
 

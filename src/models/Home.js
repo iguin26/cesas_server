@@ -2,7 +2,7 @@ import { sequelize } from "../config/db.js";
 import { DataTypes } from "sequelize";
 
 export const Home = sequelize.define(
-  "Home",
+  "Homes",
   {
     image: {
       type: DataTypes.STRING,
@@ -11,8 +11,6 @@ export const Home = sequelize.define(
       type: DataTypes.TEXT,
     },
   },
-  {
-    freezeTableName: true,
-  }
 );
-// await Home.sync({ alter: true });
+
+// await Home.sync();

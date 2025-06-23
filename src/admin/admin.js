@@ -2,9 +2,9 @@
 import AdminJS from "adminjs";
 import * as AdminJSSequelize from "@adminjs/sequelize";
 import { ProfisCourseResource } from "./resources/ProfisCourseResource.js";
-import { SubjectResource } from "../admin/resources/SubjectResource.js";
 import { CardResource } from "./resources/CardResource.js";
-import { FaqResource } from "./resources/FaqResource.js";
+import { EjaFaqResource } from "./resources/ejaFaqResource.js";
+import { ProfisFaqResource } from "./resources/profisFaqResource.js";
 import { FooterResource } from "./resources/FooterResource.js";
 import { HomeResource } from "./resources/HomeResource.js";
 import { ejaStudentResource } from "./resources/ejaStudentResource.js";
@@ -14,6 +14,11 @@ import { componentLoader, Components } from "./components/components.js";
 import { ejaSubmitFormTitleResource } from "./resources/ejaSubmitFormTitleResource.js";
 import { profisSubmitFormTitleResource } from "./resources/profisSubmitFormTitleResource.js";
 import { ejaCourseResource } from "./resources/ejaCourseResource.js";
+import { StaffResource } from "./resources/StaffResource.js";
+import { CoordinatorsResource } from "./resources/CoordinatorsResource.js";
+import { SupervisionResource } from "./resources/SupervisionResource.js";
+import { TeachingStaffResource } from "./resources/TeachingStaffResource.js";
+import { EventResource } from "./resources/EventResource.js";
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -27,9 +32,14 @@ export const admin = new AdminJS({
     ejaCourseResource,
     ejaStudentResource,
     profisStudentResource,
-    SubjectResource,
+    StaffResource,
+    CoordinatorsResource,
+    SupervisionResource,
+    TeachingStaffResource,
+    EventResource,
     HomeResource,
-    FaqResource,
+    EjaFaqResource,
+    ProfisFaqResource,
     FooterResource,
     ejaSubmitFormTitleResource,
     profisSubmitFormTitleResource,
