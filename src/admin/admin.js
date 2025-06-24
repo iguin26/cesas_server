@@ -19,6 +19,7 @@ import { CoordinatorsResource } from "./resources/CoordinatorsResource.js";
 import { SupervisionResource } from "./resources/SupervisionResource.js";
 import { TeachingStaffResource } from "./resources/TeachingStaffResource.js";
 import { EventResource } from "./resources/EventResource.js";
+import { studentAreaURLResource } from "./resources/studentAreaURLResource.js";
 
 AdminJS.registerAdapter({
   Resource: AdminJSSequelize.Resource,
@@ -38,6 +39,7 @@ export const admin = new AdminJS({
     TeachingStaffResource,
     EventResource,
     HomeResource,
+    studentAreaURLResource,
     EjaFaqResource,
     ProfisFaqResource,
     FooterResource,

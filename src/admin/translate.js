@@ -19,6 +19,7 @@ export const translations = {
       Footer: "Rodapé",
       Homes: "Mural Página Principal",
       Events: "Eventos",
+      studentAreaURLs: "Link Área do Aluno",
       Students: "Estudantes",
       show: {
         true: "Sim",

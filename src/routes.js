@@ -13,6 +13,7 @@ import CardService from './services/cardsService.js'
 import FaqService from "./services/faqService.js";
 import TeamService from "./services/teamService.js";
 import HomeService from "./services/homeService.js";
+import StudentAreaService from "./services/studentAreaService.js";
 
 export const router = express.Router();
 
@@ -77,6 +78,15 @@ router.get("/getEJAFaqs", async (req, res) => {
     res.json(cards);
   } catch (error) {
     res.status(500).json({ error: "Erro ao listar faqs" });
+  }
+});
+
+router.get("/getStudentAreaURL", async (req, res) => {
+  try {
+    const cards = await StudentAreaService.listStudentAreaURL();
+    res.json(cards);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao listar URL" });
   }
 });
 
