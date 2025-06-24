@@ -11,7 +11,7 @@ export const studentAreaURLResource = {
                 isAccessible: true
             },
             delete: { isAccessible: false },
-            new: { isAccessible: true },
+            new: { isAccessible: false },
             bulkDelete: { isAccessible: false },
         },
     },
