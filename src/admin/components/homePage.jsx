@@ -73,18 +73,6 @@ const HomePage = () => {
             >
               {" "}
               <li style={{ marginBottom: "8px" }}>
-                {" "}
-                <strong>nome do card</strong> (ex: "Card 1", "Card 2") não é
-                editável, pois ele define a <strong>ordem</strong> em que os
-                cards aparecem no site (Card 1 é o primeiro à esquerda, Card 2 o
-                segundo, e assim por diante).
-              </li>
-              <li style={{ marginBottom: "8px" }}>
-                Podem existir no máximo <strong>4 cards</strong>. Por isso, não
-                é possível criar novos cards além dos já existentes e nem
-                excluí-los.
-              </li>
-              <li style={{ marginBottom: "8px" }}>
                 Para controlar a <strong>visibilidade</strong> de um card no
                 site (por exemplo, se desejar exibir apenas 2 dos 4 cards),
                 localize o card desejado na lista, clique para editar e
@@ -160,11 +148,6 @@ const HomePage = () => {
                 caixa de seleção para controlar quais perguntas e respostas
                 aparecem na seção de FAQ do site.
               </li>
-              <li style={{ marginBottom: "8px" }}>
-                O limite máximo de perguntas e respostas que se pode ter é 15,
-                contando as que aparecem e que não aparecem na seçao de FAQ do
-                site.
-              </li>
             </ul>
           </Box>
         </li>
@@ -231,7 +214,8 @@ const HomePage = () => {
             alignItems="center"
             mb="sm"
           >
-            <Icon icon="Download" mr="sm" /> Download de Fichas (PDF - EJA):
+            <Icon icon="Download" mr="sm" /> Download de Fichas (PDF - Alunos
+            EJA):
           </Text>
           <Box ml="24px">
             <ul
@@ -243,22 +227,75 @@ const HomePage = () => {
             >
               <li style={{ marginBottom: "8px" }}>
                 Para baixar a ficha em PDF de um{" "}
-                <strong>aluno específico</strong>, encontre o aluno na lista,
-                clique para visualizar seus detalhes e utilize a ação
-                "Visualizar PDF do Aluno".
+                <strong>aluno específico</strong>, encontre o aluno na lista de
+                "Alunos EJA", clique nos <strong>três pontinhos</strong> (
+                <Icon icon="MoreVertical" />) ao lado do aluno e selecione a
+                ação "Baixar PDF(s) (Individual)".
               </li>
               <li style={{ marginBottom: "8px" }}>
                 Para baixar um arquivo ZIP contendo as fichas de{" "}
-                <strong>todos os alunos</strong>, utilize a ação "Gerar PDFs
-                (ZIP)" disponível na listagem de estudantes.
+                <strong>todos os alunos EJA</strong>, acesse a listagem de
+                "Alunos EJA" e procure pela ação "Baixar PDF(s) (Todos)"
+                disponível no <strong>canto superior direito</strong> da tela,
+                próximo ao botão "Criar novo".
               </li>
               <li style={{ marginBottom: "8px" }}>
                 Para baixar um arquivo ZIP com as fichas de{" "}
-                <strong>alunos selecionados</strong>, marque a caixa de seleção
-                ao lado dos alunos desejados na lista (ou use o filtro para
-                refinar a lista e depois marque a caixa de seleção principal
-                para selecionar todos os filtrados) e então clique na ação
-                "Gerar PDFs (selecionados)".
+                <strong>alunos EJA selecionados</strong>, marque a caixa de
+                seleção ao lado dos alunos desejados na lista (ou use o filtro
+                para refinar a lista e depois marque a caixa de seleção
+                principal para selecionar todos os filtrados) e então clique na
+                ação "Baixar PDF(s) (Selecionados)" que aparecerá no topo da
+                lista.
+              </li>
+            </ul>
+          </Box>
+        </li>
+        <Box my="lg" />
+        <li>
+          <Text
+            my="md"
+            fontSize="lg"
+            fontWeight="bold"
+            display="flex"
+            alignItems="center"
+            mb="sm"
+          >
+            <Icon icon="Download" mr="sm" /> Download de Dados (CSV - Alunos
+            Profissionalizante):
+          </Text>
+          <Box ml="24px">
+            <ul
+              style={{
+                paddingLeft: "20px",
+                listStylePosition: "outside",
+                marginTop: "0px",
+              }}
+            >
+              <li style={{ marginBottom: "8px" }}>
+                Para baixar os dados em CSV de um{" "}
+                <strong>aluno profissionalizante específico</strong>, encontre o
+                aluno na lista de "Alunos Profissionalizante", clique nos{" "}
+                <strong>três pontinhos</strong> (<Icon icon="MoreVertical" />)
+                ao lado do aluno e selecione a ação "Baixar CSV(s)
+                (Individual)".
+              </li>
+              <li style={{ marginBottom: "8px" }}>
+                Para baixar um arquivo ZIP contendo os CSVs de{" "}
+                <strong>todos os alunos profissionalizante</strong>, acesse a
+                listagem de "Alunos Profissionalizante" e procure pela ação
+                "Baixar Csv(s) (Todos)" disponível no{" "}
+                <strong>canto superior direito</strong> da tela, próximo ao
+                botão "Criar novo".
+              </li>
+              <li style={{ marginBottom: "8px" }}>
+                Para baixar um arquivo ZIP com os CSVs de{" "}
+                <strong>alunos profissionalizante selecionados</strong>, marque
+                a caixa de seleção ao lado dos alunos desejados na lista (ou use
+                o filtro para refinar a lista e depois marque a caixa de seleção
+                principal para selecionar todos os filtrados) e então clique na
+                ação "Baixar Csv(s) (Selecionados)" que aparecerá no topo da
+                lista.
               </li>
             </ul>
           </Box>
