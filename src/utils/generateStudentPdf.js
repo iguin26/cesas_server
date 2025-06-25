@@ -112,80 +112,47 @@ export const generateStudentPdf = async (
       console.error(`Erro ao carregar a logo:`, error.message);
     }
 
-    //titulo
     doc
       .fontSize(20)
       .font("OpenSans")
       .text("Ficha do Aluno", { align: "center" });
     doc.moveDown();
 
-    // cabecalho
-    const startX = 50;
-    const startY = doc.y;
-    const headerMargin = 10;
+    doc.fontSize(12);
+    doc.text(`Nome: ${student.name}`);
+    doc.text(`Tipo Matrícula: ${student.applyTypeName}`);
+    doc.text(`Turno: ${student.shift}`);
 
-    const headerInfo = [
-      `Nome: ${student.name}`,
-      `Data de nascimento: ${student.birthDate}`,
-      `Turno: ${student.shift}`,
-      `Tipo: ${student.applyType}`,
-      `CPF: ${student.cpf}`,
-    ];
+    student.legacyStudent
+      ? doc.text(`Já foi estudante: Sim`)
+      : doc.text(`Já foi estudante: Não`);
 
-    doc.fontSize(12).fillColor("black").font("OpenSans");
+    student.disabledStudent
+      ? doc.text(`Tem problemas de saúde?: Sim`)
+      : doc.text(`Tem problemas de saúde?: Não`);
 
-    const lineHeight = 15;
-    const headerHeight = lineHeight * headerInfo.length + headerMargin * 2;
-    const headerWidth = doc.page.width - startX * 2;
-    doc
-      .rect(
-        startX - headerMargin,
-        startY - headerMargin,
-        headerWidth + headerMargin * 2,
-        headerHeight
-      )
-      .fillAndStroke("#f0f0f0", "black");
-    doc.fillColor("black");
-    headerInfo.forEach((info, i) => {
-      doc.text(info, startX, startY + i * lineHeight);
-    });
-    doc.y = startY + headerHeight + 20;
+    student.recordlessStudent
+      ? doc.text("Necessita de exame de classificação ou reclassificação? Sim")
+      : doc.text("Necessita de exame de classificação ou reclassificação? Não");
 
-    const yesNo = (bool) => (bool ? "Sim" : "Não");
+    student.socialName ? doc.text(`Nome social: ${student.socialName}`) : "";
 
-    doc.text(`Já foi estudante: ${yesNo(student.legacyStudent)}`, {
-      lineGap: 6,
-    });
-    doc.text(`Tem problemas de saúde?: ${yesNo(student.disabledStudent)}`, {
-      lineGap: 6,
-    });
-    doc.text(
-      `Necessita de exame de classificação ou reclassificação? ${yesNo(
-        student.recordlessStudent
-      )}`,
-      { lineGap: 6 }
-    );
-    if (student.socialName)
-      doc.text(`Nome social: ${student.socialName}`, { lineGap: 6 });
-
-    doc.text(`Nacionalidade: ${student.nationality}`, { lineGap: 6 });
-    doc.text(`Estado: ${student.state}`, { lineGap: 6 });
-    doc.text(`Número do RG: ${student.idNumber}`, { lineGap: 6 });
-    doc.text(`Data de expedição do RG: ${student.idExpDate}`, { lineGap: 6 });
-    doc.text(`Órgão de expedição do RG: ${student.idIssuingBody}`, {
-      lineGap: 6,
-    });
-    doc.text(`Raça/Etnia: ${student.ethnicity}`, { lineGap: 6 });
-    doc.text(`CEP: ${student.cep}`, { lineGap: 6 });
-    doc.text(`Endereço: ${student.address}`, { lineGap: 6 });
-    doc.text(`Celular: ${student.cellphoneNumber}`, { lineGap: 6 });
-    doc.text(`Telefone: ${student.landlinePhone}`, { lineGap: 6 });
-    doc.text(`Telefone de emergência: ${student.emergencyPhone}`, {
-      lineGap: 6,
-    });
-    doc.text(`Nome do responsável: ${student.responsibleName}`, { lineGap: 6 });
-    doc.text(`RG do responsável: ${student.responsibleId}`, { lineGap: 6 });
-    doc.text(`Gênero: ${student.gender}`, { lineGap: 6 });
+    doc.text(`Data de nascimento: ${student.birthDate}`);
+    doc.text(`CPF: ${student.cpf}`);
+    doc.text(`Nacionalidade: ${student.nationality}`);
+    doc.text(`Estado: ${student.state}`);
+    doc.text(`Número do RG: ${student.idNumber}`);
+    doc.text(`Data de expedição do RG: ${student.idExpDate}`);
+    doc.text(`Órgão de expedição do RG: ${student.idIssuingBody}`);
+    doc.text(`Raça/Etnia: ${student.ethnicity}`);
+    doc.text(`CEP: ${student.cep}`);
+    doc.text(`Endereço: ${student.address}`);
+    doc.text(`Celular: ${student.cellphoneNumber}`);
+    doc.text(`Telefone: ${student.landlinePhone}`);
+    doc.text(`Telefone de emergência: ${student.emergencyPhone}`);
+    doc.text(`Nome do responsável: ${student.responsibleName}`);
+    doc.text(`RG do responsável: ${student.responsibleId}`);
+    doc.text(`Gênero: ${student.gender}`);
 
     doc.moveDown();
 
