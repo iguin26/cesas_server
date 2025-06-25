@@ -56,7 +56,7 @@ export const translations = {
     properties: {
       subject: "Matéria",
       name: "Nome",
-      uploadImage: "Imagem do upload img",
+      uploadImage: "Imagem",
       updatedAt: "Data de Atualização",
       createdAt: "Data de Criação",
       start_date: "Data de Início",

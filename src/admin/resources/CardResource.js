@@ -6,7 +6,6 @@ export const CardResource = {
     listProperties: ["id", "name", "title", "text", "show"],
     properties: {
       name: {
-        isDisabled: true,
         position: 2,
       },
       title: {
@@ -18,11 +17,6 @@ export const CardResource = {
       show: {
         position: 5,
       },
-    },
-
-    actions: {
-      new: { isAccessible: false },
-      delete: { isAccessible: false },
     },
   },
 };
