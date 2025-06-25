@@ -117,6 +117,7 @@ class ejaStudentController {
       const {
         name,
         applyType,
+        applyTypeName,
         shift,
         legacyStudent,
         disabledStudent,
@@ -143,6 +144,7 @@ class ejaStudentController {
       const newStudent = await ejaStudent.create({
         name,
         applyType,
+        applyTypeName,
         shift,
         legacyStudent,
         disabledStudent,
