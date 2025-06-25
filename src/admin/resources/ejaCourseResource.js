@@ -22,24 +22,18 @@ export const ejaCourseResource = {
       description: {
         position: 2,
       },
-      start_date: {
-        position: 3,
-      },
-      end_date: {
-        position: 4,
-      },
       image: {
         isVisible: false,
-        position: 5,
+        position: 3,
       },
       morningShiftAvailable: {
-        position: 6,
+        position: 4,
       },
       afternoonShiftAvailable: {
-        position: 7,
+        position: 5,
       },
       nightShiftAvailable: {
-        position: 8
+        position: 6
       },
       
       uploadImage: {

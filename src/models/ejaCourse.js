@@ -6,12 +6,6 @@ export const ejaCourse = sequelize.define("ejaCourses", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  start_date: {
-    type: DataTypes.DATEONLY,
-  },
-  end_date: {
-    type: DataTypes.DATEONLY,
-  },
   image: {
     type: DataTypes.STRING,
     allowNull: true,

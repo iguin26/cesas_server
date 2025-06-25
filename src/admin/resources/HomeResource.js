@@ -38,13 +38,13 @@ export const HomeResource = {
         after: [uploadAfterHook],
       },
       list: {
-        showFilter: false,
+        showFilter: true,
       },
       delete: {
         isAccessible: false,
       },
       show: {
-        isVisible: false,
+        isVisible: true,
       },
       edit: {
         before: [uploadBeforeHook],

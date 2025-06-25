@@ -9,6 +9,9 @@ export const ejaStudent = sequelize.define("ejaStudent", {
   applyType: {
     type: DataTypes.STRING,
   },
+  applyTypeName: {
+    type: DataTypes.STRING,
+  },
   studentPhoto: {
     type: DataTypes.STRING,
   },
@@ -90,4 +93,4 @@ export const ejaStudent = sequelize.define("ejaStudent", {
     type: DataTypes.STRING,
   },
 });
-// await ejaStudent.sync();
+await ejaStudent.sync({alter: true});
