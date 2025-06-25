@@ -34,6 +34,8 @@ export const HomeResource = {
     actions: {
       new: {
         isAccessible: false,
+        before: [uploadBeforeHook],
+        after: [uploadAfterHook],
       },
       list: {
         showFilter: false,
