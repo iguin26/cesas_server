@@ -120,7 +120,7 @@ export const generateStudentPdf = async (
 
     doc.fontSize(12);
     doc.text(`Nome: ${student.name}`);
-    doc.text(`Tipo: ${student.applyType}`);
+    doc.text(`Tipo de Matrícula: ${student.applyTypeName}`);
     doc.text(`Turno: ${student.shift}`);
 
     student.legacyStudent
