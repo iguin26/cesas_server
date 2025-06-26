@@ -16,4 +16,4 @@ export const EjaFaq = sequelize.define(
   {
   }
 );
-await EjaFaq.sync({ alter: true });
+await EjaFaq.sync();

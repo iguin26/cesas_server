@@ -16,4 +16,4 @@ export const ProfisFaq = sequelize.define(
   {
   }
 );
-await ProfisFaq.sync({ alter: true });
+await ProfisFaq.sync();

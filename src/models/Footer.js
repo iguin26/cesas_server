@@ -30,4 +30,5 @@ export const Footer = sequelize.define(
     freezeTableName: true,
   }
 );
-// await Footer.sync();
+
+await Footer.sync();

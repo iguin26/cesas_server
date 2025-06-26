@@ -93,4 +93,4 @@ export const ejaStudent = sequelize.define("ejaStudent", {
     type: DataTypes.STRING,
   },
 });
-await ejaStudent.sync({alter: true});
+await ejaStudent.sync();

@@ -56,4 +56,4 @@ export const profisStudent = sequelize.define("profisStudent", {
   },
 });
 
-await profisStudent.sync({alter: true});
+await profisStudent.sync();

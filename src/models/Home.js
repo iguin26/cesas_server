@@ -13,4 +13,4 @@ export const Home = sequelize.define(
   },
 );
 
-// await Home.sync();
+await Home.sync();

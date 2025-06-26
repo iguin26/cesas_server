@@ -8,4 +8,3 @@ export const Supervision = sequelize.define("Supervision", {
 });
 
 await Supervision.sync();
-// await Card.drop();

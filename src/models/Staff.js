@@ -17,4 +17,3 @@ export const Staff = sequelize.define("Staff", {
 });
 
 await Staff.sync();
-// await Card.drop();

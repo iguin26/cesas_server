@@ -9,5 +9,4 @@ export const Coordinators = sequelize.define("Coordinators", {
 
 await Coordinators.sync();
 
-// await Card.drop();
 
