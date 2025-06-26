@@ -9,9 +9,9 @@ export const profisStudent = sequelize.define("profisStudent", {
   applyCourse: {
     type: DataTypes.STRING,
   },
-  // applyCourseName: {
-  //   type: DataTypes.STRING,
-  // },
+  applyCourseName: {
+    type: DataTypes.STRING,
+  },
   applyShift: {
     type: DataTypes.STRING,
   },
@@ -54,8 +54,6 @@ export const profisStudent = sequelize.define("profisStudent", {
   gender: {
     type: DataTypes.STRING,
   },
-  studentMedicalReport: {
-    type: DataTypes.STRING, // ------------------------------
-  },
 });
-// await profisStudent.sync({alter: true});
+
+await profisStudent.sync({alter: true});

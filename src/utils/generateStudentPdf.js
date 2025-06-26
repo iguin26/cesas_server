@@ -37,11 +37,9 @@ const writeImage = (
 
     doc.font("OpenSans").fontSize(12);
     doc.text(field);
-
     doc.image(image, (doc.page.width - imgWidth) / 2, doc.y, {
       width: imgWidth,
     });
-
     doc.y += imgHeight + 10;
     doc.moveDown();
   } catch (error) {
@@ -67,7 +65,6 @@ export const generateStudentPdf = async (
 
     doc.pipe(buffer);
 
-    // Registrar e carregar a fonte OpenSans
     const fontPath = path.resolve(
       "src/fonts/OpenSans-VariableFont_wdth,wght.ttf"
     );
@@ -75,10 +72,9 @@ export const generateStudentPdf = async (
       doc.registerFont("OpenSans", fontPath);
       doc.font("OpenSans");
     } else {
-      console.warn("Arquivo da fonte Open Sans não encontrado em:", fontPath);
+      console.warn("Fonte Open Sans não encontrada:", fontPath);
     }
 
-    // Desenhar bordas na página
     const drawBorders = () => {
       const margin = 20;
       doc.lineWidth(1);
@@ -95,9 +91,7 @@ export const generateStudentPdf = async (
 
     try {
       const logoPath = path.resolve("uploads/logo/logo-cesas.png");
-      console.log(logoPath);
       const logoImage = doc.openImage(logoPath);
-
       const logoMaxHeight = 50;
       const scale = logoMaxHeight / logoImage.height;
       const logoWidth = logoImage.width * scale;
@@ -106,134 +100,84 @@ export const generateStudentPdf = async (
         width: logoWidth,
         height: logoMaxHeight,
       });
-
       doc.moveDown(2);
     } catch (error) {
-      console.error(`Erro ao carregar a logo:`, error.message);
+      console.error("Erro ao carregar a logo:", error.message);
     }
 
-    doc
-      .fontSize(20)
-      .font("OpenSans")
-      .text("Ficha do Aluno", { align: "center" });
+    doc.fontSize(20).text("Ficha do Aluno", { align: "center" });
     doc.moveDown();
 
     doc.fontSize(12);
-    doc.text(`Nome: ${student.name}`);
-    doc.text(`Tipo Matrícula: ${student.applyTypeName}`);
-    doc.text(`Turno: ${student.shift}`);
+    doc.text(`Nome: ${student.name}`); doc.moveDown();
+    doc.text(`Tipo Matrícula: ${student.applyTypeName}`); doc.moveDown();
+    doc.text(`Turno: ${student.shift}`); doc.moveDown();
 
-    student.legacyStudent
-      ? doc.text(`Já foi estudante: Sim`)
-      : doc.text(`Já foi estudante: Não`);
+    doc.text(`Já foi estudante: ${student.legacyStudent ? "Sim" : "Não"}`); doc.moveDown();
+    doc.text(`Tem problemas de saúde?: ${student.disabledStudent ? "Sim" : "Não"}`); doc.moveDown();
+    doc.text(`Necessita de exame de classificação ou reclassificação? ${student.recordlessStudent ? "Sim" : "Não"}`); doc.moveDown();
 
-    student.disabledStudent
-      ? doc.text(`Tem problemas de saúde?: Sim`)
-      : doc.text(`Tem problemas de saúde?: Não`);
+    if (student.socialName) {
+      doc.text(`Nome social: ${student.socialName}`); doc.moveDown();
+    }
 
-    student.recordlessStudent
-      ? doc.text("Necessita de exame de classificação ou reclassificação? Sim")
-      : doc.text("Necessita de exame de classificação ou reclassificação? Não");
-
-    student.socialName ? doc.text(`Nome social: ${student.socialName}`) : "";
-
-    doc.text(`Data de nascimento: ${student.birthDate}`);
-    doc.text(`CPF: ${student.cpf}`);
-    doc.text(`Nacionalidade: ${student.nationality}`);
-    doc.text(`Estado: ${student.state}`);
-    doc.text(`Número do RG: ${student.idNumber}`);
-    doc.text(`Data de expedição do RG: ${student.idExpDate}`);
-    doc.text(`Órgão de expedição do RG: ${student.idIssuingBody}`);
-    doc.text(`Raça/Etnia: ${student.ethnicity}`);
-    doc.text(`CEP: ${student.cep}`);
-    doc.text(`Endereço: ${student.address}`);
-    doc.text(`Celular: ${student.cellphoneNumber}`);
-    doc.text(`Telefone: ${student.landlinePhone}`);
-    doc.text(`Telefone de emergência: ${student.emergencyPhone}`);
-    doc.text(`Nome do responsável: ${student.responsibleName}`);
-    doc.text(`RG do responsável: ${student.responsibleId}`);
-    doc.text(`Gênero: ${student.gender}`);
+    doc.text(`Data de nascimento: ${student.birthDate}`); doc.moveDown();
+    doc.text(`CPF: ${student.cpf}`); doc.moveDown();
+    doc.text(`Nacionalidade: ${student.nationality}`); doc.moveDown();
+    doc.text(`Estado: ${student.state}`); doc.moveDown();
+    doc.text(`Número do RG: ${student.idNumber}`); doc.moveDown();
+    doc.text(`Data de expedição do RG: ${student.idExpDate}`); doc.moveDown();
+    doc.text(`Órgão de expedição do RG: ${student.idIssuingBody}`); doc.moveDown();
+    doc.text(`Raça/Etnia: ${student.ethnicity}`); doc.moveDown();
+    doc.text(`CEP: ${student.cep}`); doc.moveDown();
+    doc.text(`Endereço: ${student.address}`); doc.moveDown();
+    doc.text(`Celular: ${student.cellphoneNumber}`); doc.moveDown();
+    doc.text(`Telefone: ${student.landlinePhone}`); doc.moveDown();
+    doc.text(`Telefone de emergência: ${student.emergencyPhone}`); doc.moveDown();
+    doc.text(`Nome do responsável: ${student.responsibleName}`); doc.moveDown();
+    doc.text(`RG do responsável: ${student.responsibleId}`); doc.moveDown();
+    doc.text(`Gênero: ${student.gender}`); doc.moveDown();
 
     doc.moveDown();
 
     if (student.studentPhoto) {
-      writeImage(
-        doc,
-        student.id,
-        student.studentPhoto,
-        "Foto do estudante:",
-        studentType
-      );
+      writeImage(doc, student.id, student.studentPhoto, "Foto do estudante:", studentType);
     } else {
-      doc.font("OpenSans").text("Foto do estudante:");
-      doc.moveDown();
+      doc.text("Foto do estudante:"); doc.moveDown();
       doc.fillColor("red").text("Imagem não enviada.", { align: "center" });
-      doc.fillColor("black");
-      doc.moveDown();
+      doc.fillColor("black"); doc.moveDown();
     }
 
     if (student.studentId) {
-      writeImage(
-        doc,
-        student.id,
-        student.studentId,
-        "Foto do RG do estudante:",
-        studentType
-      );
+      writeImage(doc, student.id, student.studentId, "Foto do RG do estudante:", studentType);
     } else {
-      doc.font("OpenSans").text("Foto do RG do estudante:");
-      doc.moveDown();
+      doc.text("Foto do RG do estudante:"); doc.moveDown();
       doc.fillColor("red").text("Imagem não enviada.", { align: "center" });
-      doc.fillColor("black");
-      doc.moveDown();
+      doc.fillColor("black"); doc.moveDown();
     }
 
     if (student.studentProofOfResidence) {
-      writeImage(
-        doc,
-        student.id,
-        student.studentProofOfResidence,
-        "Foto do comprovante de residência:",
-        studentType
-      );
+      writeImage(doc, student.id, student.studentProofOfResidence, "Foto do comprovante de residência:", studentType);
     } else {
-      doc.font("OpenSans").text("Foto do comprovante de residência:");
-      doc.moveDown();
+      doc.text("Foto do comprovante de residência:"); doc.moveDown();
       doc.fillColor("red").text("Imagem não enviada.", { align: "center" });
-      doc.fillColor("black");
-      doc.moveDown();
+      doc.fillColor("black"); doc.moveDown();
     }
 
     if (student.studentMedicalReport) {
-      writeImage(
-        doc,
-        student.id,
-        student.studentMedicalReport,
-        "Laudo médico:",
-        studentType
-      );
+      writeImage(doc, student.id, student.studentMedicalReport, "Laudo médico:", studentType);
     } else {
-      doc.font("OpenSans").text("Laudo médico:");
-      doc.moveDown();
+      doc.text("Laudo médico:"); doc.moveDown();
       doc.fillColor("red").text("Imagem não enviada.", { align: "center" });
-      doc.fillColor("black");
-      doc.moveDown();
+      doc.fillColor("black"); doc.moveDown();
     }
 
     if (student.studentAcademicRecord) {
-      writeImage(
-        doc,
-        student.id,
-        student.studentAcademicRecord,
-        "Histórico escolar:",
-        studentType
-      );
+      writeImage(doc, student.id, student.studentAcademicRecord, "Histórico escolar:", studentType);
     } else {
-      doc.font("OpenSans").text("Histórico escolar:");
-      doc.moveDown();
+      doc.text("Histórico escolar:"); doc.moveDown();
       doc.fillColor("red").text("Imagem não enviada.", { align: "center" });
-      doc.fillColor("black");
-      doc.moveDown();
+      doc.fillColor("black"); doc.moveDown();
     }
 
     doc.end();

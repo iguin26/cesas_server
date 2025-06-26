@@ -17,6 +17,7 @@ class profisStudentController {
       const {
         name,
         applyCourse,
+        applyCourseName,
         applyShift,
         disabledStudent,
         levelOfEducation,
@@ -36,6 +37,7 @@ class profisStudentController {
       const newStudent = await profisStudent.create({
         name,
         applyCourse,
+        applyCourseName,
         applyShift,
         disabledStudent,
         levelOfEducation,

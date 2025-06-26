@@ -8,7 +8,7 @@ class CsvService {
     const fields = [
       student.id || "",
       student.name || "",
-      student.applyCourse || "",
+      student.applyCourseName || "",
       student.applyShift || "",
       student.disabledStudent ? "Sim" : "Não",
       student.levelOfEducation || "",
