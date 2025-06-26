@@ -12,8 +12,6 @@ export const ejaCourseResource = {
       "id",
       "name",
       "uploadImage",
-      "start_date",
-      "end_date",
     ],
     properties: {
       name: {

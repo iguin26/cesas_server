@@ -12,12 +12,13 @@ import { File } from "./models/File.js";
 
 import path from "path";
 import * as url from "url";
+import compression from "compression";
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const app = express();
-
+app.use(compression())
 // Configuração do AdminJS
 const adminRouter = buildAuthenticatedRouter(
   admin,
